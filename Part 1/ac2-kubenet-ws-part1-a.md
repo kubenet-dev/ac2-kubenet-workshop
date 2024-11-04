@@ -28,7 +28,7 @@ Wait a few minutes for codespaces to load and go to the **Terminal** Section
 
 #### **Installation of Kind and kubectl**
 
-<span style="color:red">**Important:** You can skip this part if you are using GitHub codespaces. the lab image is already coming with the required tools and applications.</span>
+  **IMPORTANT:** You can skip this **Step** if you are using GitHub codespaces. the lab image is already coming with the required tools and applications.
 
 1. **Install Kind**  
    Run the following commands to download and set up Kind:
