@@ -23,7 +23,7 @@ Welcome to the **Kubernetes Network Workshop** repository! This collection of la
 
 Each lab provides step-by-step instructions, making it easy to follow along, even if you are new to Kubernetes. You can start with [ac2-kubenet-ws-part1-a.md](ac2-kubenet-ws-part1-a.md) and progress to the next labs.
 
-For best results, we recommend running these labs in a GitHub Codespace or a local development environment with Kubernetes and Docker installed.
+For best results, we recommend running these labs in a GitHub Codespace or a local development environment with Docker installed.
 
 Happy learning, and enjoy exploring Kubernetes!
 
