@@ -27,7 +27,9 @@ Wait a few minutes for codespaces to load and go to the **Terminal** Section
 **Kind** is a opensource tool for running local Kubernetes clusters using Docker container "nodes." It’s great for learning, testing, or developing on Kubernetes.
 
 #### **Installation of Kind and kubectl**
-**Important:** You can skip this part if you are using GitHub codespaces. the lab image is already coming with the required tools and applications.
+
+<span style="color:red">**Important:** You can skip this part if you are using GitHub codespaces. the lab image is already coming with the required tools and applications.</span>
+
 1. **Install Kind**  
    Run the following commands to download and set up Kind:
    ```bash
