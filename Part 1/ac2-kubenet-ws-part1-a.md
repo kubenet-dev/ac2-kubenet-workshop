@@ -60,7 +60,7 @@ Check the `kubectl` version
    ```
 ---
 
-### **Step 1: Install and Configure `kubectl`**
+### **Step 1: Create your kubernetes cluster**
 1. **Create Kind Cluster and docker Network for GitHub CodeSpaces**
    If you are using codespaces, you need to create a docker network before to create the cluster. Otherwise, **go to Step 2**.
    Create docker network:
