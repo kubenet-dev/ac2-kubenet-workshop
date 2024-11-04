@@ -1,4 +1,4 @@
-# Kubernetes Network Workshop Labs - Part 1
+# Kubernetes Network Automation Workshop Labs - Part 1
 
 Welcome to the **Kubernetes Network Workshop** repository! This collection of labs is designed to provide hands-on experience with setting up and managing a Kubernetes cluster, exploring its core components, and using Kubernetes to manage applications. Each lab builds on the previous one to deepen your understanding of Kubernetes fundamentals.
 
