@@ -6,7 +6,7 @@ Welcome to the **Kubernetes Network Workshop** repository! This collection of la
 
 1. **[ac2-kubenet-ws-part1-a.md](ac2-kubenet-ws-part1-a.md): Setting Up a Kubernetes Cluster with `Kind`**  
    This lab guides you through creating a local Kubernetes cluster using `Kind` (Kubernetes in Docker) and introduces you to `kubectl`, Kubernetes' command-line tool. Key objectives include:
-   - Installing and configuring `Kind` and `kubectl`.
+   - Installing and configuring `Kind` and `kubectl`. (skip this part if you are using GitHub codespaces)
    - Exploring essential Kubernetes components like `kube-apiserver`, `etcd`, `kube-scheduler`, and others within the `kube-system` namespace.
    - Understanding the roles of these core components in managing and maintaining the cluster.
 
