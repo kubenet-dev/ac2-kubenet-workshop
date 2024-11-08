@@ -1,0 +1,25 @@
+name: basic-usage
+prefix: ""
+
+mgmt:
+  network: basic-usage
+  ipv4-subnet: 172.21.0.0/16
+
+topology:
+  kinds:
+    nokia_srlinux:
+      type: ixrd2l
+      image: ghcr.io/nokia/srlinux:24.7.2
+  nodes:
+    dev1:
+      kind: nokia_srlinux
+      mgmt-ipv4: 172.21.0.200
+      image-pull-policy: never
+    dev2:
+      kind: nokia_srlinux
+      mgmt-ipv4: 172.21.0.201
+      image-pull-policy: never
+  links:
+    - endpoints: ["dev1:e1-1","dev2:e1-1"]
+    - endpoints: ["dev1:e1-2","dev2:e1-2"]
+     
