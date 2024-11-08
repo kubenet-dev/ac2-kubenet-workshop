@@ -75,13 +75,46 @@ v1alpha1.inv.sdcio.dev                 Local                          True      
 
 ```bash
 # Nokia SR Linux Yang Schema
+batcat artifacts/schema-nokia-srl-24.7.2.yaml
 kubectl apply -f artifacts/schema-nokia-srl-24.7.2.yaml
+
 # Connection Profile
+batcat artifacts/target-conn-profile-gnmi.yaml
 kubectl apply -f artifacts/target-conn-profile-gnmi.yaml
+
 # Sync Profile
+batcat artifacts/target-sync-profile-gnmi.yaml
 kubectl apply -f artifacts/target-sync-profile-gnmi.yaml
+
 # SRL Secret
+batcat artifacts/secret-srl.yaml
 kubectl apply -f artifacts/secret-srl.yaml
+
 # Discovery Rule
+batcat artifacts/discovery_address.yaml
 kubectl apply -f artifacts/discovery_address.yaml
+```
+
+### Usage
+
+#### Retrieve Configuration
+
+```shell
+kubectl get runningconfigs.config.sdcio.dev dev1 -o yaml
+```
+
+The output is quite extensive so lets just take a look at the network-instance configuration.
+
+```shell
+kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.network-instance}" | jq
+```
+
+#### Apply Configuration
+
+```shell
+```
+
+#### Apply ConfigSet
+
+```shell
 ```
