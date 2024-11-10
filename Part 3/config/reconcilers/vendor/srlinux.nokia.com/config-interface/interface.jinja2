@@ -1,0 +1,13 @@
+{%- macro interface(spec) export -%}
+      interface:
+    {%- if spec.name == "interface" %}
+      - name: ethernet-1/{{ spec.port | integer }}
+    {%- else %}
+      - name: {{ spec.name }}{{ spec.port | integer }}
+    {%- endif %}
+        description: k8s-{{ spec.name }}
+        admin-state: enable
+    {%- if spec.vlanTagging %}
+        vlan-tagging: true
+    {%- endif -%}
+{%- endmacro %}

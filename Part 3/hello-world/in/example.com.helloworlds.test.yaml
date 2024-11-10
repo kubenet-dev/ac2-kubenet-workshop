@@ -1,0 +1,6 @@
+apiVersion: example.com/v1alpha1
+kind: HelloWorld
+metadata:
+  name: test
+  namespace: default
+

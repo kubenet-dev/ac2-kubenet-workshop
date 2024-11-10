@@ -1,0 +1,158 @@
+{
+  "system": {
+    "aaa": {
+      "authentication": {
+        "idle-timeout": 7200,
+        "authentication-method": [
+          "local"
+        ],
+        "admin-user": {
+          "ssh-key": [
+            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCPStMEn326bNzT2+RTGu8ywEhBkHkXyz9h2pGY5cNnCd0uQqyOo4AaSJ4AIofpCC4agxv6sstSDftK04SmYe/4tyKYKJwAezpxkxblK9DijGpUJgInqJ03F58yxXWu7exhuDEiQEXN8+qlNMrRlG6UUwQEtJO0oh+jgoT8XRL+iAlUY5chcE+GvgPx0EO/xxo61MrRLxWuqqmJp1WMCVv0CnftRQuFTZG3nlMMVXhF5Div48VCo8NSDPrs2ImpuJp+3RjRE62u1IDs6h900EEjxfKSvdFPIxblShCBcoxNiXOXQ+P9/I8VlQ2Bn1ELRAJrKAGYIbMsAXnirDjwoWr1+HopFYxaeOjJllzEFUVx3erCip+R5LKSmgV+7dITshtCjMqb+A/XuQ7AlFOrXttudPIkWvG87unBJuB4dSyh8esIwHaeNmL+h6/ktHMcJ2rOmAuOpJXkpHC6VbQFyQfFfhkk+19ZXZod4dD6wLfnBC+bwgZU9J24t5zIX0YaGls=",
+            "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAgEAkulIK0tWXvHcg2kPG1h/4FD2+ia847p3Vx5eoQ2OE8AtLrxvZt1/2yJOYwamN4VfvTuyKMnJ12Nq6dunFcb6hCzoo2yVlgPmbCUok5oTvUfxUNigNQXCs/EfcXsJsVuDhsv6wm1xKs2SvPkg9LZsuIGoh8VEsHRjDCGAKjJjxNsgQEY2ZftFXLdjpMlWrk0uU9nY14AKT9DbcxioNq77asX1t+8j6gBahrQj/3DRYMFvrkImO6vS2W8ZDmD/M1TCeZxg+DqbTXkh6efUkWYXrnDxPUSm8R4HgL6b5TeUGkJekavpJ7wMGSssBKOFRMjZj9tQaYTNmIfSYcPxY9EmthObaTCovNoFv0pWCUQsnk7G1kL0S+HFnrOTRh7lXMc9cOqgXOO6M3M2rwRqxZHcMRCQSOYermRO2otVcHvoCo2bWFBvNtU4k1QuSonZy0zvpVE9nubtiDpWOTyM54Cx80+ZAFPA1N0xiN5q+aDfF2A/J7gMHDeO5b7FLRFv3KtdhMZxwhvppHdNxyMKcZta+HvuzY8rZyQ7IlxTzEtK/gBGVpxuBUy2eS69SI0pV/EA0Amv6E/KhK2sOud0rfj1EuV+dshGGUdxJKWY7dgF8xCQcSujuMPF5ufwPmw2xjFiDjvG4BBeREfLyHzArNGo97dpClOSG1NkyIVsqeCpEeE=",
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8E90POUf2RgNbUf1467iuIg42U3YyAHw246zN7Xq8J"
+          ]
+        },
+        "linuxadmin-user": {
+          "password": "$y$j9T$uEpbQNxVBoRlKQbmY3usE/$VvTJySvfZcRx8vDJg2LmOxAdBF5IREyia7Z8aIDf9N0",
+          "ssh-key": [
+            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCPStMEn326bNzT2+RTGu8ywEhBkHkXyz9h2pGY5cNnCd0uQqyOo4AaSJ4AIofpCC4agxv6sstSDftK04SmYe/4tyKYKJwAezpxkxblK9DijGpUJgInqJ03F58yxXWu7exhuDEiQEXN8+qlNMrRlG6UUwQEtJO0oh+jgoT8XRL+iAlUY5chcE+GvgPx0EO/xxo61MrRLxWuqqmJp1WMCVv0CnftRQuFTZG3nlMMVXhF5Div48VCo8NSDPrs2ImpuJp+3RjRE62u1IDs6h900EEjxfKSvdFPIxblShCBcoxNiXOXQ+P9/I8VlQ2Bn1ELRAJrKAGYIbMsAXnirDjwoWr1+HopFYxaeOjJllzEFUVx3erCip+R5LKSmgV+7dITshtCjMqb+A/XuQ7AlFOrXttudPIkWvG87unBJuB4dSyh8esIwHaeNmL+h6/ktHMcJ2rOmAuOpJXkpHC6VbQFyQfFfhkk+19ZXZod4dD6wLfnBC+bwgZU9J24t5zIX0YaGls=",
+            "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAgEAkulIK0tWXvHcg2kPG1h/4FD2+ia847p3Vx5eoQ2OE8AtLrxvZt1/2yJOYwamN4VfvTuyKMnJ12Nq6dunFcb6hCzoo2yVlgPmbCUok5oTvUfxUNigNQXCs/EfcXsJsVuDhsv6wm1xKs2SvPkg9LZsuIGoh8VEsHRjDCGAKjJjxNsgQEY2ZftFXLdjpMlWrk0uU9nY14AKT9DbcxioNq77asX1t+8j6gBahrQj/3DRYMFvrkImO6vS2W8ZDmD/M1TCeZxg+DqbTXkh6efUkWYXrnDxPUSm8R4HgL6b5TeUGkJekavpJ7wMGSssBKOFRMjZj9tQaYTNmIfSYcPxY9EmthObaTCovNoFv0pWCUQsnk7G1kL0S+HFnrOTRh7lXMc9cOqgXOO6M3M2rwRqxZHcMRCQSOYermRO2otVcHvoCo2bWFBvNtU4k1QuSonZy0zvpVE9nubtiDpWOTyM54Cx80+ZAFPA1N0xiN5q+aDfF2A/J7gMHDeO5b7FLRFv3KtdhMZxwhvppHdNxyMKcZta+HvuzY8rZyQ7IlxTzEtK/gBGVpxuBUy2eS69SI0pV/EA0Amv6E/KhK2sOud0rfj1EuV+dshGGUdxJKWY7dgF8xCQcSujuMPF5ufwPmw2xjFiDjvG4BBeREfLyHzArNGo97dpClOSG1NkyIVsqeCpEeE=",
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8E90POUf2RgNbUf1467iuIg42U3YyAHw246zN7Xq8J"
+          ]
+        }
+      },
+      "server-group": [
+        {
+          "name": "local",
+          "type": "local"
+        }
+      ]
+    },
+    "ssh-server": [
+      {
+        "name": "mgmt",
+        "admin-state": "enable",
+        "network-instance": "mgmt",
+        "use-credentialz": true
+      }
+    ],
+    "lldp": {
+      "admin-state": "enable"
+    },
+    "tls": {
+      "server-profile": [
+        {
+          "name": "clab-profile",
+          "key": "$aes1$ATSNG9C0WO6EjW8=$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",
+          "certificate": "-----BEGIN CERTIFICATE-----\nMIID0DCCArigAwIBAgICBnowDQYJKoZIhvcNAQELBQAwUjELMAkGA1UEBhMCVVMx\nCTAHBgNVBAcTADEVMBMGA1UEChMMY29udGFpbmVybGFiMQkwBwYDVQQLEwAxFjAU\nBgNVBAMTDW5ld2VzdCBsYWIgQ0EwHhcNMjQxMDIxMDkzNTM1WhcNMjUxMDIxMDkz\nNTM1WjBTMQswCQYDVQQGEwJVUzEJMAcGA1UEBxMAMRUwEwYDVQQKEwxjb250YWlu\nZXJsYWIxCTAHBgNVBAsTADEXMBUGA1UEAxMOc3JsMS5uZXdlc3QuaW8wggEiMA0G\nCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDIzQfRsaWYhzbuzFU89S7dV4hSz+EL\n2W+CnlLzJygHLbTAWq95x0IJylJK9Oa6P0ELhQwPHSlrDW0sdU8QyLPGJMfaasjP\ncHm026KEsnaH+UrUsDxGpkNgEVg+rq1yn6ds8ax0xwsQHTMJpcz0CfPu9skCpXf0\nwqNxGmSTp0iQXa6dH3VHSXTi2v1GVGJTXpqDMV4EeOcumGaIpWEBfbaXwEbCbZdh\nKZsvGUZLKu6CGsGCHik8e3wL+fb05aaCbbVHwaAbEfCHGJnqpvX/B0hfqlcPGnzL\nw3poiAgbC3kYY46Oc0YVMW42D2l9in4/VD+0NLd8D1WBk5NNYg0CITmdAgMBAAGj\nga4wgaswDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF\nBQcDATAOBgNVHQ4EBwQFAQIDBAYwHwYDVR0jBBgwFoAUm+BxMWYtJIErwR4NU5uD\nNly6j3MwSQYDVR0RBEIwQIIEc3JsMYIQY2xhYi1uZXdlc3Qtc3JsMYIOc3JsMS5u\nZXdlc3QuaW+HBKwUFAqHECABAXIAIAAgAAAAAAAAAAowDQYJKoZIhvcNAQELBQAD\nggEBAGHYN5L8gvKAyDOQvCiUyMPEMTqF1skn/PKOJ9IUqzdrNdH1u3wzoOsNI12Y\nr9o0jREs3YAzd29hhhNYzcTmy1cQsIerNVicBix2pASKQ1WcUQS5tGZsoloYJ1ve\nluTUyM0mTSYCWHx87+EiqUNKaR6kvDG5dW6eGAifPbJrL2xMloCtEmfTfJt6Vufo\nRC0WFeGxT1O4xwxifyheDvMThEO/lNrV+PUelsguAQVmJnSWB0Y/kf8owR2lz0Fw\n+MhBPiOceZHNeXaQ91hPrGXQH0P369gbDsnWpYL/JNQMUeL34b2VcbGo3CxBALDJ\n52C7FsDrQMvXfZQAIQMQ6q6OgOs=\n-----END CERTIFICATE-----\n",
+          "authenticate-client": false
+        }
+      ]
+    },
+    "grpc-server": [
+      {
+        "name": "insecure-mgmt",
+        "admin-state": "enable",
+        "rate-limit": 65000,
+        "network-instance": "mgmt",
+        "port": 57401,
+        "trace-options": [
+          "request",
+          "response",
+          "common"
+        ],
+        "services": [
+          "gnmi",
+          "gnoi",
+          "gribi",
+          "p4rt"
+        ],
+        "unix-socket": {
+          "admin-state": "enable"
+        }
+      },
+      {
+        "name": "mgmt",
+        "admin-state": "enable",
+        "rate-limit": 65000,
+        "tls-profile": "clab-profile",
+        "network-instance": "mgmt",
+        "trace-options": [
+          "request",
+          "response",
+          "common"
+        ],
+        "services": [
+          "gnmi",
+          "gnoi",
+          "gribi",
+          "p4rt"
+        ],
+        "unix-socket": {
+          "admin-state": "enable"
+        }
+      }
+    ],
+    "json-rpc-server": {
+      "admin-state": "enable",
+      "network-instance": [
+        {
+          "name": "mgmt",
+          "http": {
+            "admin-state": "enable"
+          },
+          "https": {
+            "admin-state": "enable",
+            "tls-profile": "clab-profile"
+          }
+        }
+      ]
+    },
+    "dns": {
+      "network-instance": "mgmt",
+      "server-list": [
+        "10.210.21.227",
+        "10.210.21.228"
+      ]
+    },
+    "snmp": {
+      "access-group": [
+        {
+          "name": "SNMPv2-RO-Community",
+          "security-level": "no-auth-no-priv",
+          "community-entry": [
+            {
+              "name": "RO-Community",
+              "community": "$aes1$AWD9X8MAf0g2gm8=$BD/rLsJm4eSN4OCh6pAbEg=="
+            }
+          ]
+        }
+      ],
+      "network-instance": [
+        {
+          "name": "mgmt",
+          "admin-state": "enable"
+        }
+      ]
+    },
+    "banner": {
+      "login-banner": "................................................................\n:                  Welcome to Nokia SR Linux!                  :\n:              Open Network OS for the NetOps era.             :\n:                                                              :\n:    This is a freely distributed official container image.    :\n:                      Use it - Share it                       :\n:                                                              :\n: Get started: https://learn.srlinux.dev                       :\n: Container:   https://go.srlinux.dev/container-image          :\n: Docs:        https://doc.srlinux.dev/24-7                    :\n: Rel. notes:  https://doc.srlinux.dev/rn24-7-2                :\n: YANG:        https://yang.srlinux.dev/release/v24.7.2        :\n: Discord:     https://go.srlinux.dev/discord                  :\n: Contact:     https://go.srlinux.dev/contact-sales            :\n................................................................\n"
+    }
+  },
+  "network-instance": [
+    {
+      "name": "mgmt",
+      "type": "ip-vrf",
+      "admin-state": "enable",
+      "description": "Management network instance",
+      "protocols": {
+        "linux": {
+          "import-routes": true,
+          "export-routes": true,
+          "export-neighbors": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+apiVersion: choreo.kform.dev/v1alpha1
+kind: Reconciler
+metadata:
+  name: helloworlds.example.com.hello-world
+spec: 
+  conditionType: Ready
+  specUpdate: true
+  for: 
+    group: example.com
+    version: v1alpha1
+    kind: HelloWorld
+    selector: {}

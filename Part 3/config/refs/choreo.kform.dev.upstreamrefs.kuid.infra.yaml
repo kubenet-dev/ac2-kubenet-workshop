@@ -1,0 +1,28 @@
+apiVersion: choreo.kform.dev/v1alpha1
+kind: UpstreamRef
+metadata:
+  name: kuid.infra
+spec:
+  type: crd
+  url: https://github.com/kuidio/kuid.git
+  ref:
+    type: hash
+    name: cb752b9df3fe1ca9285a40e10d44dc87cd021162
+  includes:
+  - infra.kuid.dev_adaptors
+  - infra.kuid.dev_clusters
+  - infra.kuid.dev_endpoints
+  - infra.kuid.dev_endpointsets
+  - infra.kuid.dev_links
+  - infra.kuid.dev_linksets
+  - infra.kuid.dev_modulebays
+  - infra.kuid.dev_modules
+  - infra.kuid.dev_nodeitems
+  - infra.kuid.dev_nodes
+  - infra.kuid.dev_nodesets
+  - infra.kuid.dev_partitions
+  - infra.kuid.dev_ports
+  - infra.kuid.dev_racks
+  - infra.kuid.dev_regions
+  - infra.kuid.dev_sites
+  

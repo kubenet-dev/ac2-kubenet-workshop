@@ -1,0 +1,23 @@
+apiVersion: choreo.kform.dev/v1alpha1
+kind: Reconciler
+metadata:
+  name: nodes.infra.kuid.dev.id
+spec: 
+  conditionType: IPClaimReady
+  for: 
+    group: infra.kuid.dev
+    version: v1alpha1
+    kind: Node
+    selector: {}
+  owns:
+  - group: ipam.be.kuid.dev
+    version: v1alpha1
+    kind: IPClaim
+  watches:
+  - group: ipam.be.kuid.dev
+    version: v1alpha1
+    kind: IPIndex
+    selector:
+      match:
+        metadata.name: kubenet.default
+        status.conditions.exists(c, c.type == 'Ready' && c.status == 'True'): "true"

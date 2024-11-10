@@ -1,0 +1,15 @@
+apiVersion: choreo.kform.dev/v1alpha1
+kind: Reconciler
+metadata:
+  name: device.network.kubenet.dev.subinterfaces.srlinux.nokia.com
+spec: 
+  conditionType: Ready
+  for: 
+    group: device.network.kubenet.dev
+    version: v1alpha1
+    kind: SubInterface
+    selector: {}
+  owns:
+  - group: config.sdcio.dev
+    version: v1alpha1
+    kind: Config

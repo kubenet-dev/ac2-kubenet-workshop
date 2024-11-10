@@ -1,0 +1,40 @@
+{%- macro subinterface(spec) export -%}
+      interface:
+    {%- if spec.name == "interface" %}
+      - name: ethernet-1/{{ spec.port | integer }}
+    {%- else %}
+      - name: {{ spec.name }}{{ spec.port | integer }}
+    {%- endif %}
+        subinterface:
+        - index: {{ spec.id | integer }}
+    {%- if spec.name != "system" %}
+          type: {{ spec.type }}
+    {%- endif %}
+          description: k8s-{{ spec.name }}.{{ spec.id | integer }}
+          admin-state: enable
+    {%- if spec.ipv4 %}
+          ipv4:
+            admin-state: disable
+        {%- if spec.ipv4.addresses|length > 0 %}
+            address:
+        {%- for address in spec.ipv4.addresses %}
+            - ip-prefix: {{ address }}
+        {%- endfor %}
+            unnumbered:
+              admin-state: disable
+        {%- endif %}
+    {%- endif %}
+    {%- if spec.ipv6 %}
+          ipv6:
+            admin-state: disable
+            router-advertisement:
+              router-role:
+                admin-state: disable
+        {%- if spec.ipv6.addresses|length > 0 %}
+            address:
+        {%- for address in spec.ipv6.addresses %}
+            - ip-prefix: {{ address }}
+        {%- endfor %}
+        {%- endif %}
+     {%- endif %}
+{%- endmacro %}
