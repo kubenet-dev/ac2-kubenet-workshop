@@ -33,12 +33,17 @@ Wait a few minutes for codespaces to load and go to the **Terminal** Section
 1. **Install Kind**  
    Run the following commands to download and set up Kind:
    ```bash
-   curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.23.0/kind-linux-amd64
+   curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-linux-amd64
    chmod +x ./kind
    sudo mv ./kind /usr/local/bin/kind
    ```
-2. **Create a Kind-based Kubernetes cluster**  
-   ```bash
+2. **Create a Kind-based Kubernetes cluster**
+   ```shell
+   # import the locally cached kind node container image
+   # workshop specific step, to prevent ratelimiting e.g. due to all participants pulling at same
+   docker image load -i /var/cache/kindest-node.tar
+
+   # create kind cluster
    kind create cluster
    ```
 
