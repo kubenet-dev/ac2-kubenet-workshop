@@ -25,6 +25,8 @@ The directory where the crds are located (`crds`)
 cat hello-world/crds/example.com_helloworlds.yaml
 ```
 
+[crd](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/refs/heads/main/Part%203/hello-world/crds/example.com_helloworlds.yaml)
+
 ### Input
 
 The input directory where your input manifest are located
@@ -45,7 +47,7 @@ The directory where the reconcilers are located (`reconcilers`). Each reconciler
 cat hello-world/reconcilers/hello-world/config.yaml 
 ```
 
-[reconciler config](./hello-world/reconcilers/hello-world/config.yaml)
+[reconciler config](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/refs/heads/main/Part%203/hello-world/reconcilers/hello-world/config.yaml)
 
 Parameters:
 
@@ -68,7 +70,7 @@ Parameters:
 cat hello-world/reconcilers/hello-world/reconciler.star
 ```
 
-[reconciler business logic](./hello-world/reconcilers/hello-world/reconciler.star)
+[reconciler business logic](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/refs/heads/main/Part%203/hello-world/reconcilers/hello-world/reconciler.star)
 
 The business logic is simple, it updates the spec with new data.
 
