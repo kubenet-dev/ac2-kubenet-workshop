@@ -114,7 +114,7 @@ start the choreoserver with the -r and -s flags
 -s flag enables sdc schema validation and config generation
 
 ```bash
-choreoctl server start part3/config -r -s
+choreoctl server start config -r -s
 ```
 
 The choreoserver support a version controlled backend (git) but we don't explore this in this exercise.
@@ -273,6 +273,7 @@ choreoctl run diff
 Lets add some nodes and links -> update the in file
 
 ```yaml
+choreoctl apply -f - <<EOF
 apiVersion: ipam.be.kuid.dev/v1alpha1
 kind: IPIndex
 metadata:
@@ -288,6 +289,7 @@ spec:
     prefixType: pool
     labels:
       infra.kuid.dev/purpose: loopback
+EOF
 ```
 
 After updating the resource run the reconcilers again

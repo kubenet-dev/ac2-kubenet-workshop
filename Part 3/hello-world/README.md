@@ -104,7 +104,7 @@ parameters:
 start the choreoserver
 
 ```bash
-choreoctl server start part3/hello-world
+choreoctl server start hello-world
 ```
 
 The choreoserver support a version controlled backend (git) but we don't explore this in this exercise.

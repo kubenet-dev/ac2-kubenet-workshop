@@ -5,15 +5,31 @@ metadata:
   namespace: default
 spec:
   defaults:
-    provider: srlinux.nokia.com
     platformType: ixrd3
-    version: 24.7.2
+    provider: srlinux.nokia.com
     region: region1
     site: us-east
-  nodes:
-  - name: node1
-  - name: node2
+    version: 24.7.2
   links:
   - endpoints:
-    - {node: node1, port: 1, endpoint: 1, adaptor: "sfp"}
-    - {node: node2, port: 1, endpoint: 1, adaptor: "sfp"}
+    - adaptor: sfp
+      endpoint: 1
+      node: node2
+      port: 2
+    - adaptor: sfp
+      endpoint: 1
+      node: node3
+      port: 2
+  - endpoints:
+    - adaptor: sfp
+      endpoint: 1
+      node: node3
+      port: 1
+    - adaptor: sfp
+      endpoint: 1
+      node: node4
+      port: 1
+  nodes:
+  - name: node2
+  - name: node3
+  - name: node4

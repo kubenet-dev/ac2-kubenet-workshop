@@ -111,7 +111,7 @@ parameters:
 start the choreoserver
 
 ```bash
-choreoctl server start part3/topology
+choreoctl server start topology
 ```
 
 The choreoserver support a version controlled backend (git) but we don't explore this in this exercise.
@@ -296,6 +296,7 @@ choreoctl run diff
 Lets add some nodes and links -> update the in file
 
 ```yaml
+choreoctl apply -f - <<EOF
 apiVersion: topo.kubenet.dev/v1alpha1
 kind: Topology
 metadata:
@@ -326,6 +327,7 @@ spec:
   - endpoints:
     - {node: node4, port: 2, endpoint: 1, adaptor: "sfp"}
     - {node: node1, port: 2, endpoint: 1, adaptor: "sfp"}
+EOF
 ```
 
 After updating the resource run the reconcilers again
@@ -375,6 +377,7 @@ Topology.topo.kubenet.dev/v1alpha1 kubenet
 Lets delete node1 and its respective links and run the reconcilers again
 
 ```yaml
+choreoctl apply -f - <<EOF
 apiVersion: topo.kubenet.dev/v1alpha1
 kind: Topology
 metadata:
@@ -398,6 +401,7 @@ spec:
   - endpoints:
     - {node: node3, port: 1, endpoint: 1, adaptor: "sfp"}
     - {node: node4, port: 1, endpoint: 1, adaptor: "sfp"}
+EOF
 ```
 
 After updating the resource run the reconcilers again
