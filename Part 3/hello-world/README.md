@@ -13,28 +13,7 @@ The goal of this exercise is to show you the basics of choreo (and kubernetes pr
 
 ## getting started
 
-/// tab | Codespaces
-
-run the environment in codespaces
-
-```bash
-https://codespaces.new/kubenet-dev/ac2-kubenet-workshop
-```
-
-///
-
-
-/// tab | local environment
-
-clone the choreo-examples git repo
-
-```bash
-git clone https://github.com/kubenet-dev/ac2-kubenet-workshop
-```
-
-///
-
-Best to use 2 windows, one for the choreo server and one for the choreo client, since the choreo server will serve the system
+move you PWD to the `ac2-kubenet-workshop/Part 3` subdirectory
 
 ## Explore the project
 
@@ -42,21 +21,27 @@ Best to use 2 windows, one for the choreo server and one for the choreo client, 
 
 The directory where the crds are located (`crds`)
 
+```shell
+cat hello-world/crds/example.com_helloworlds.yaml
+```
+
+### in
+
+The input directory where your input manifest are located
+
+```shell
+cat hello-world/in/example.com.helloworlds.test.yaml 
+```
+
 ### reconcilers
 
 The directory where the reconcilers are located (`reconcilers`). Each reconciler is located in its own directory with a reconciler config and reconciler logic
 
 #### Reconiler config
 
-/// details | Reconciler Config
-
-```yaml
---8<--
-https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/main/part3/hello-world/reconcilers/hello-world/config.yaml
---8<--
+```shell
+cat hello-world/reconcilers/hello-world/config.yaml 
 ```
-
-///
 
 Parameters:
 
@@ -75,21 +60,15 @@ Parameters:
 
 #### Reconiler business logic
 
-/// details | Reconciler
-
-```yaml
---8<--
-https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/main/part3/hello-world/reconcilers/hello-world/reconciler.star
---8<--
+```shell
+cat hello-world/reconcilers/hello-world/reconciler.star
 ```
 
-///
-
-The reconciler updates the spec
+The business logic is simple, it updates the spec with new data.
 
 ####  builtin functions
 
-reconciler_result: returns the result of the reconciler
+`reconciler_result`: returns the result of the reconciler
 
 parameters:
   - self: updated resource -> if specUpdate is not set only the status is used
@@ -103,7 +82,7 @@ parameters:
 
 start the choreoserver
 
-```bash
+```shell
 choreoctl server start hello-world
 ```
 
@@ -123,13 +102,13 @@ This create 2 directories in the choreo project
 
 Now run the reconciler
 
-```bash
+```shell
 choreoctl run once
 ```
 
 you should see the reconciler `helloworlds.example.com.hello-world` being executed.
 
-```bash
+```shell
 loading ...
 running reconcilers ...
 running root reconciler hello-world
@@ -154,7 +133,7 @@ c. The reconciler business logic got triggered by adding the input
 
 let's see if it performed its job, by looking at the details of the HelloWorld manifest
 
-```bash
+```shell
 choreoctl get helloworlds.example.com test -o yaml
 ```
 
@@ -198,7 +177,7 @@ def reconcile(self):
 
 This should result in the following outcome if we run the business logic again.
 
-```bash
+```shell
 choreoctl run once
 ```
 
@@ -235,19 +214,19 @@ def reconcile(self):
 
 when executing
 
-```bash
+```shell
 choreoctl run once
 ```
 
 the following result is obtained, indicating the schema error
 
-```bash
+```shell
 execution failed
   reason task helloworlds.example.com.hello-world.HelloWorld.example.com.test message cannot apply resource, err: rpc error: code = InvalidArgument desc = fieldmanager apply failed err: failed to create typed patch object (default/test; example.com/v1alpha1, Kind=HelloWorld): .spec.greetings: field not declared in schema
 completed
 ```
 
-## Hello world resource (API)
+## Hello world resource source (API)
 
 ```golang
 // HelloWorldSpec defines the desired state of the HelloWorld

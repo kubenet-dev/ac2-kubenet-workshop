@@ -9,6 +9,6 @@ Goals:
 
 Excercices:
 
-- Hello world
-- Topology
-- Config
+- [Hello world](./hello-world)
+- [Topology](./topology)
+- [Config](./config)
