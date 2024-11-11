@@ -54,6 +54,8 @@ The following reconcilers are present:
 
 #### Reconiler config
 
+Explore the reconciler logic in your IDE or ...
+
 ```shell
 cat config/reconcilers/id/config.yaml 
 cat config/reconcilers/itfce/config.yaml 
@@ -62,6 +64,8 @@ cat config/reconcilers/vendor/srlinux.nokia.com/config-subinterface/config.yaml
 ```
 
 #### Reconiler business logic
+
+Explore the reconciler logic in your IDE or ...
 
 ```shell
 cat config/reconcilers/id/reconciler.star 
