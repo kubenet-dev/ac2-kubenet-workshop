@@ -10,40 +10,34 @@ The goal of this exercise is to show you the basics of choreo (and kubernetes pr
   - additional builtin functions
   - YANG schemas
 
-## getting started
+## Getting started
 
-/// tab | Codespaces
-
-run the environment in codespaces
-
-```bash
-https://codespaces.new/kubenet-dev/ac2-kubenet-workshop
-```
-
-///
-
-
-/// tab | local environment
-
-clone the choreo-examples git repo
-
-```bash
-git clone https://github.com/kubenet-dev/ac2-kubenet-workshop
-```
-
-///
-
-Best to use 2 windows, one for the choreo server and one for the choreo client, since the choreo server will serve the system
+move you PWD to the `ac2-kubenet-workshop/Part 3` subdirectory
 
 ## Explore the project
 
-### crds
+### CRDs
 
 No local crds are referenced, but we have 3 references that import crds. This allows for reusable code. There is 2 types of references in choreo:
 - crd based: only import crds -> we call this a crd child instance
 - all: import everything (right now we only support 2 hierarchies of all refs) - root -> single root child, but 
 
-### reconcilers
+### Input
+
+The input directory where your input manifest are located
+
+```shell
+cat config/in/ipam.be.kuid.dev.ipindex.kubenet.default.yaml
+cat config/in/infra.kuid.dev.node.kubenet.region1.us-east.node1.yaml
+```
+
+One is an IP Pool from which we can draw IPs, the 2nd is a node inventory object representing a network device.
+
+[ip pool input](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/refs/heads/main/Part%203/config/in/ipam.be.kuid.dev.ipindex.kubenet.default.yaml)
+
+[node input](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/refs/heads/main/Part%203/config/in/infra.kuid.dev.node.kubenet.region1.us-east.node1.yaml)
+
+### Reconcilers
 
 The directory where the reconcilers are located (`reconcilers`). Each reconciler is located in its own directory with a reconciler config and reconciler logic.
 
@@ -60,53 +54,47 @@ The following reconcilers are present:
 
 #### Reconiler config
 
-/// details | Reconciler Config
-
-```yaml
---8<--
-https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/main/part3/config/reconcilers/vendor/srlinux.nokia.com/config-interface/config.yaml
---8<--
+```shell
+cat config/reconcilers/id/config.yaml 
+cat config/reconcilers/itfce/config.yaml 
+cat config/reconcilers/vendor/srlinux.nokia.com/config-interface/config.yaml 
+cat config/reconcilers/vendor/srlinux.nokia.com/config-subinterface/config.yaml 
 ```
-
-///
 
 #### Reconiler business logic
 
-/// details | Jinja2 Reconciler
-
-```yaml
---8<--
-https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/main/part3/config/reconcilers/vendor/srlinux.nokia.com/config-interface//main.jinja2
---8<--
---8<--
-https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/main/part3/config/reconcilers/vendor/srlinux.nokia.com/config-interface//interface.jinja2
---8<--
+```shell
+cat config/reconcilers/id/reconciler.star 
+cat config/reconcilers/itfce/reconciler.star 
+cat config/reconcilers/vendor/srlinux.nokia.com/config-interface/main.jinja2 
+cat config/reconcilers/vendor/srlinux.nokia.com/config-interface/interface.jinja2 
+cat config/reconcilers/vendor/srlinux.nokia.com/config-subinterface/main.jinja2 
+cat config/reconcilers/vendor/srlinux.nokia.com/config-subinterface/subinterface.jinja2 
 ```
-
-///
-
 
 ####  builtin functions
 
-isIPv4 | IsIPv6: return true or false based on the prefix parameter
+`isIPv4` | `IsIPv6`: return true or false based on the prefix parameter
 
 parameters:
   - prefix
 
-get_resource: returns an empty resource with the apiVersion and Kind parameters specified
+`get_resource`: returns an empty resource with the apiVersion and Kind parameters specified
 
 parameters:
   - apiVersion
   - kind
 
 
-client_get: get a resource from the api server
+`client_get`: get a resource from the api server
 
 parameters:
   - apiVersion
   - kind
 
 ## choreo server
+
+if you have a previous server running, stop the server with ^C. You can reuse the window.Otherwise open a terminal window. 
 
 start the choreoserver with the -r and -s flags
 
