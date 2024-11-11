@@ -33,7 +33,7 @@ The input directory where your input manifest are located
 cat hello-world/in/example.com.helloworlds.test.yaml 
 ```
 
-[input](./hello-world/in/example.com.helloworlds.test.yaml)
+[input](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/main/Part\ 3/hello-world/in/example.com.helloworlds.test.yaml)
 
 ### Reconcilers
 
