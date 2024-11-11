@@ -64,6 +64,10 @@ Parameters:
 
 #### Reconiler business logic
 
+```shell
+cat topology/reconcilers/topology/reconciler.star
+```
+
 [reconciler business logic](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/refs/heads/main/Part%203/topology/reconcilers/topology/reconciler.star)
 
 The reconciler creates nodes and links based on the topology cr

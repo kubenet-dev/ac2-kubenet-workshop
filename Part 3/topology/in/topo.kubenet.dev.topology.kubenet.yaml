@@ -30,6 +30,5 @@ spec:
       node: node4
       port: 1
   nodes:
+  - name: node1
   - name: node2
-  - name: node3
-  - name: node4
