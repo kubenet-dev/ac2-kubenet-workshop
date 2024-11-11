@@ -11,13 +11,13 @@ The goal of this exercise is to show you the basics of choreo (and kubernetes pr
   - conditions/conditionType
   - finalizer
 
-## getting started
+## Getting started
 
 move you PWD to the `ac2-kubenet-workshop/Part 3` subdirectory
 
 ## Explore the project
 
-### crds
+### CRDs
 
 The directory where the crds are located (`crds`)
 
@@ -25,7 +25,7 @@ The directory where the crds are located (`crds`)
 cat hello-world/crds/example.com_helloworlds.yaml
 ```
 
-### in
+### Input
 
 The input directory where your input manifest are located
 
@@ -33,7 +33,9 @@ The input directory where your input manifest are located
 cat hello-world/in/example.com.helloworlds.test.yaml 
 ```
 
-### reconcilers
+[input](./hello-world/in/example.com.helloworlds.test.yaml)
+
+### Reconcilers
 
 The directory where the reconcilers are located (`reconcilers`). Each reconciler is located in its own directory with a reconciler config and reconciler logic
 
@@ -42,6 +44,8 @@ The directory where the reconcilers are located (`reconcilers`). Each reconciler
 ```shell
 cat hello-world/reconcilers/hello-world/config.yaml 
 ```
+
+[reconciler config](./hello-world/reconcilers/hello-world/config.yaml)
 
 Parameters:
 
@@ -63,6 +67,8 @@ Parameters:
 ```shell
 cat hello-world/reconcilers/hello-world/reconciler.star
 ```
+
+[reconciler business logic](./hello-world/reconcilers/hello-world/reconciler.star)
 
 The business logic is simple, it updates the spec with new data.
 
