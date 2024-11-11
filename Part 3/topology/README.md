@@ -12,38 +12,28 @@ new:
   - more builtin resource
 
 
-## getting started
+## Getting started
 
-/// tab | Codespaces
-
-run the environment in codespaces
-
-```bash
-https://codespaces.new/kubenet-dev/ac2-kubenet-workshop
-```
-
-///
-
-
-/// tab | local environment
-
-clone the choreo-examples git repo
-
-```bash
-git clone https://github.com/kubenet-dev/ac2-kubenet-workshop
-```
-
-///
-
-Best to use 2 windows, one for the choreo server and one for the choreo client, since the choreo server will serve the system
+move you PWD to the `ac2-kubenet-workshop/Part 3` subdirectory
 
 ## Explore the project
 
-### crds
+### CRDs
 
 No local crds are referenced, but we have  2 references that import crds. This allows for reusable code. There is 2 types of references in choreo:
 - crd based: only import crds -> we call this a crd child instance
 - all: import everything (right now we only support 2 hierarchies of all refs) - root -> single root child, but 
+
+### Input
+
+The input directory where your input manifest are located
+
+```shell
+cat topology/in/topo.kubenet.dev.topology.kubenet.yaml  
+```
+
+[input](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/refs/heads/main/Part%203/topology/in/topo.kubenet.dev.topology.kubenet.yaml )
+
 
 ### reconcilers
 
@@ -51,15 +41,11 @@ The directory where the reconcilers are located (`reconcilers`). Each reconciler
 
 #### Reconiler config
 
-/// details | Reconciler Config
-
-```yaml
---8<--
-https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/main/part3/topology/reconcilers/topology/config.yaml
---8<--
+```shell
+cat topology/reconcilers/topology/config.yaml 
 ```
 
-///
+[reconciler config](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/refs/heads/main/Part%203/topology/reconcilers/topology/config.yaml)
 
 Parameters:
 
@@ -78,17 +64,9 @@ Parameters:
 
 #### Reconiler business logic
 
-/// details | Reconciler
+[reconciler business logic](https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/refs/heads/main/Part%203/topology/reconcilers/topology/reconciler.star)
 
-```yaml
---8<--
-https://raw.githubusercontent.com/kubenet-dev/ac2-kubenet-workshop/main/part3/topology/reconcilers/topology/reconciler.star
---8<--
-```
-
-///
-
-The reconciler updates the spec
+The reconciler creates nodes and links based on the topology cr
 
 ####  builtin functions
 
@@ -108,7 +86,7 @@ parameters:
 
 ## choreo server
 
-start the choreoserver
+if you have a previous server running, stop the server with ^C. You can reuse the window.Otherwise open a terminal window and start the choreoserver 
 
 ```bash
 choreoctl server start topology

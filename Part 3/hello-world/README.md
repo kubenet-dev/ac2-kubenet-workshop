@@ -88,7 +88,7 @@ parameters:
 
 ## choreo server
 
-start the choreoserver
+open a terminal window and start the choreoserver 
 
 ```shell
 choreoctl server start hello-world
@@ -108,7 +108,7 @@ This create 2 directories in the choreo project
 
 ## choreo client
 
-Now run the reconciler
+Open a 2nd terminal where you intercat with the server using choreoctl
 
 ```shell
 choreoctl run once
