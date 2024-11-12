@@ -14,7 +14,6 @@ def reconcile(self):
     return reconcile_result(self, False, 0, "", False)
 
   for itfce in get_node_interfaces(node):
-    print("interface", itfce)
     rsp = client_create(itfce)
     if rsp["error"] != None:
       return reconcile_result(self, True, 0, rsp["error"], rsp["fatal"])
@@ -34,8 +33,7 @@ def get_node_interfaces(node):
   node_spec = node.get("spec", {})
 
   interfaces = []
-  return interfaces
-  for ifname in ["system"]:
+  for ifname in ["system", "irb"]:
     interface = {
       "apiVersion": "device.network.kubenet.dev/v1alpha1",
       "kind": "Interface",

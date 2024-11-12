@@ -139,17 +139,21 @@ you should see the reconciler `topo.kubenet.dev.topologies.nodelink` being execu
 
 ```bash
 loading ...
-opened repo https://github.com/kuidio/kuid.git ref cb752b9df3fe1ca9285a40e10d44dc87cd021162 ....
-opened repo https://github.com/kubenet-dev/apis.git ref 71e5d139d272026db682be8a815d33a9f10d7b1f ....
+cloning repo https://github.com/sdcio/config-server.git ref aaf183a28ba8a3cff222321a767fc0022923af19 ....
 opened repo https://github.com/sdcio/config-server.git ref aaf183a28ba8a3cff222321a767fc0022923af19 ....
+cloning repo https://github.com/kuidio/kuid.git ref cb752b9df3fe1ca9285a40e10d44dc87cd021162 ....
+opened repo https://github.com/kuidio/kuid.git ref cb752b9df3fe1ca9285a40e10d44dc87cd021162 ....
+cloning repo https://github.com/kubenet-dev/apis.git ref 71e5d139d272026db682be8a815d33a9f10d7b1f ....
+opened repo https://github.com/kubenet-dev/apis.git ref 71e5d139d272026db682be8a815d33a9f10d7b1f ....
 loading done
 running reconcilers ...
 running root reconciler config
 Run root summary
-execution success, time(msec) 13.209ms
+execution success, time(msec) 18.164ms
 Reconciler                                                 Start Stop Requeue Error
+device.network.kubenet.dev.interfaces.srlinux.nokia.com    6     6    0       0    
 device.network.kubenet.dev.subinterfaces.srlinux.nokia.com 3     3    0       0    
-nodes.infra.kuid.dev.id                                    3     3    0       0    
+nodes.infra.kuid.dev.id                                    4     4    0       0    
 nodes.infra.kuid.dev.itfce                                 3     3    0       0    
 running config validator ...
 completed
@@ -186,6 +190,10 @@ IPIndex.ipam.be.kuid.dev/v1alpha1 kubenet.default
   +-IPEntry.ipam.be.kuid.dev/v1alpha1 default.kubenet.default.10.0.0.0-24
 Node.infra.kuid.dev/v1alpha1 kubenet.region1.us-east.node1
 +-Config.config.sdcio.dev/v1alpha1 kubenet.region1.us-east.node1
++-Interface.device.network.kubenet.dev/v1alpha1 kubenet.region1.us-east.node1.0.0.irb
+  +-Config.config.sdcio.dev/v1alpha1 interface.kubenet.region1.us-east.node1.0.0.irb
++-Interface.device.network.kubenet.dev/v1alpha1 kubenet.region1.us-east.node1.0.0.system
+  +-Config.config.sdcio.dev/v1alpha1 interface.kubenet.region1.us-east.node1.0.0.system
 +-IPClaim.ipam.be.kuid.dev/v1alpha1 kubenet.region1.us-east.node1.ipv4
   +-IPEntry.ipam.be.kuid.dev/v1alpha1 default.kubenet.default.10.0.0.0-32
 +-RunningConfig.config.sdcio.dev/v1alpha1 kubenet.region1.us-east.node1
@@ -199,45 +207,43 @@ Node.infra.kuid.dev/v1alpha1 kubenet.region1.us-east.node1
 look at the config details and look at the ownerreferences and the fact that an ip address from the ipindex got referenced in the config.
 
 ```bash
-choreoctl get configs.config.sdcio.dev -o yaml
+choreoctl get configs.config.sdcio.dev subinterface.kubenet.region1.us-east.node1.0.0.0.system -o yaml
 ```
 
 ```yaml
-...
-- apiVersion: config.sdcio.dev/v1alpha1
-  kind: Config
-  metadata:
-    creationTimestamp: "2024-11-10T20:46:50Z"
-    labels:
-      config.sdcio.dev/targetName: kubenet.region1.us-east.node1
-      config.sdcio.dev/targetNamespace: default
-    name: subinterface.kubenet.region1.us-east.node1.0.0.0.system
-    namespace: default
-    ownerReferences:
-    - apiVersion: device.network.kubenet.dev/v1alpha1
-      controller: true
-      kind: SubInterface
-      name: kubenet.region1.us-east.node1.0.0.0.system
-      uid: b5e55efd-1717-4f3f-8aaf-34240db80698
-    uid: 2b0f1ba7-2cc8-452f-a089-e1eb59bc457f
-  spec:
-    config:
-    - path: /
-      value:
-        interface:
-        - name: system0
-          subinterface:
-          - admin-state: enable
-            description: k8s-system.0
-            index: 0
-            ipv4:
-              address:
-              - ip-prefix: 10.0.0.0/32
+apiVersion: config.sdcio.dev/v1alpha1
+kind: Config
+metadata:
+  creationTimestamp: "2024-11-12T11:01:36Z"
+  labels:
+    config.sdcio.dev/targetName: kubenet.region1.us-east.node1
+    config.sdcio.dev/targetNamespace: default
+  name: subinterface.kubenet.region1.us-east.node1.0.0.0.system
+  namespace: default
+  ownerReferences:
+  - apiVersion: device.network.kubenet.dev/v1alpha1
+    controller: true
+    kind: SubInterface
+    name: kubenet.region1.us-east.node1.0.0.0.system
+    uid: c8aebb0d-3726-40e5-8c82-ee48843566f9
+  uid: 2d46564e-7776-4d47-b602-2f3f7b9f5a58
+spec:
+  config:
+  - path: /
+    value:
+      interface:
+      - name: system0
+        subinterface:
+        - admin-state: enable
+          description: k8s-system.0
+          index: 0
+          ipv4:
+            address:
+            - ip-prefix: 10.0.0.0/32
+            admin-state: enable
+            unnumbered:
               admin-state: disable
-              unnumbered:
-                admin-state: disable
-    priority: 10
-kind: ConfigList
+  priority: 10
 ```
 
 the diff indicates which resources got added
@@ -247,10 +253,14 @@ choreoctl run diff
 ```
 
 ```bash
++ config.sdcio.dev/v1alpha1, Kind=Config interface.kubenet.region1.us-east.node1.0.0.irb
++ config.sdcio.dev/v1alpha1, Kind=Config interface.kubenet.region1.us-east.node1.0.0.system
 + config.sdcio.dev/v1alpha1, Kind=Config kubenet.region1.us-east.node1
 + config.sdcio.dev/v1alpha1, Kind=Config subinterface.kubenet.region1.us-east.node1.0.0.0.system
 + config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node1
 + config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node1.tree
++ device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node1.0.0.irb
++ device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node1.0.0.system
 + device.network.kubenet.dev/v1alpha1, Kind=SubInterface kubenet.region1.us-east.node1.0.0.0.system
 + infra.kuid.dev/v1alpha1, Kind=Node kubenet.region1.us-east.node1
 + ipam.be.kuid.dev/v1alpha1, Kind=IPClaim kubenet.default.10.0.0.0-24
@@ -297,10 +307,14 @@ choreoctl run diff
 ```
 
 ```bash
+= config.sdcio.dev/v1alpha1, Kind=Config interface.kubenet.region1.us-east.node1.0.0.irb
+= config.sdcio.dev/v1alpha1, Kind=Config interface.kubenet.region1.us-east.node1.0.0.system
 ~ config.sdcio.dev/v1alpha1, Kind=Config kubenet.region1.us-east.node1
 ~ config.sdcio.dev/v1alpha1, Kind=Config subinterface.kubenet.region1.us-east.node1.0.0.0.system
 = config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node1
-= config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node1.tree
+~ config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node1.tree
+= device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node1.0.0.irb
+= device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node1.0.0.system
 ~ device.network.kubenet.dev/v1alpha1, Kind=SubInterface kubenet.region1.us-east.node1.0.0.0.system
 ~ infra.kuid.dev/v1alpha1, Kind=Node kubenet.region1.us-east.node1
 = ipam.be.kuid.dev/v1alpha1, Kind=IPClaim kubenet.default.10.0.0.0-24
@@ -328,6 +342,10 @@ IPIndex.ipam.be.kuid.dev/v1alpha1 kubenet.default
   +-IPEntry.ipam.be.kuid.dev/v1alpha1 default.kubenet.default.1000---32
 Node.infra.kuid.dev/v1alpha1 kubenet.region1.us-east.node1
 +-Config.config.sdcio.dev/v1alpha1 kubenet.region1.us-east.node1
++-Interface.device.network.kubenet.dev/v1alpha1 kubenet.region1.us-east.node1.0.0.irb
+  +-Config.config.sdcio.dev/v1alpha1 interface.kubenet.region1.us-east.node1.0.0.irb
++-Interface.device.network.kubenet.dev/v1alpha1 kubenet.region1.us-east.node1.0.0.system
+  +-Config.config.sdcio.dev/v1alpha1 interface.kubenet.region1.us-east.node1.0.0.system
 +-IPClaim.ipam.be.kuid.dev/v1alpha1 kubenet.region1.us-east.node1.ipv4
   +-IPEntry.ipam.be.kuid.dev/v1alpha1 default.kubenet.default.10.0.0.0-32
 +-IPClaim.ipam.be.kuid.dev/v1alpha1 kubenet.region1.us-east.node1.ipv6
@@ -373,6 +391,10 @@ choreoctl run diff
 ```
 
 ```bash
+= config.sdcio.dev/v1alpha1, Kind=Config interface.kubenet.region1.us-east.node1.0.0.irb
+= config.sdcio.dev/v1alpha1, Kind=Config interface.kubenet.region1.us-east.node1.0.0.system
++ config.sdcio.dev/v1alpha1, Kind=Config interface.kubenet.region1.us-east.node2.0.0.irb
++ config.sdcio.dev/v1alpha1, Kind=Config interface.kubenet.region1.us-east.node2.0.0.system
 = config.sdcio.dev/v1alpha1, Kind=Config kubenet.region1.us-east.node1
 + config.sdcio.dev/v1alpha1, Kind=Config kubenet.region1.us-east.node2
 = config.sdcio.dev/v1alpha1, Kind=Config subinterface.kubenet.region1.us-east.node1.0.0.0.system
@@ -381,6 +403,10 @@ choreoctl run diff
 = config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node1.tree
 + config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node2
 + config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node2.tree
+= device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node1.0.0.irb
+= device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node1.0.0.system
++ device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node2.0.0.irb
++ device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node2.0.0.system
 = device.network.kubenet.dev/v1alpha1, Kind=SubInterface kubenet.region1.us-east.node1.0.0.0.system
 + device.network.kubenet.dev/v1alpha1, Kind=SubInterface kubenet.region1.us-east.node2.0.0.0.system
 = infra.kuid.dev/v1alpha1, Kind=Node kubenet.region1.us-east.node1
@@ -414,6 +440,10 @@ IPIndex.ipam.be.kuid.dev/v1alpha1 kubenet.default
   +-IPEntry.ipam.be.kuid.dev/v1alpha1 default.kubenet.default.1000---32
 Node.infra.kuid.dev/v1alpha1 kubenet.region1.us-east.node1
 +-Config.config.sdcio.dev/v1alpha1 kubenet.region1.us-east.node1
++-Interface.device.network.kubenet.dev/v1alpha1 kubenet.region1.us-east.node1.0.0.irb
+  +-Config.config.sdcio.dev/v1alpha1 interface.kubenet.region1.us-east.node1.0.0.irb
++-Interface.device.network.kubenet.dev/v1alpha1 kubenet.region1.us-east.node1.0.0.system
+  +-Config.config.sdcio.dev/v1alpha1 interface.kubenet.region1.us-east.node1.0.0.system
 +-IPClaim.ipam.be.kuid.dev/v1alpha1 kubenet.region1.us-east.node1.ipv4
   +-IPEntry.ipam.be.kuid.dev/v1alpha1 default.kubenet.default.10.0.0.0-32
 +-IPClaim.ipam.be.kuid.dev/v1alpha1 kubenet.region1.us-east.node1.ipv6
@@ -424,6 +454,10 @@ Node.infra.kuid.dev/v1alpha1 kubenet.region1.us-east.node1
   +-Config.config.sdcio.dev/v1alpha1 subinterface.kubenet.region1.us-east.node1.0.0.0.system
 Node.infra.kuid.dev/v1alpha1 kubenet.region1.us-east.node2
 +-Config.config.sdcio.dev/v1alpha1 kubenet.region1.us-east.node2
++-Interface.device.network.kubenet.dev/v1alpha1 kubenet.region1.us-east.node2.0.0.irb
+  +-Config.config.sdcio.dev/v1alpha1 interface.kubenet.region1.us-east.node2.0.0.irb
++-Interface.device.network.kubenet.dev/v1alpha1 kubenet.region1.us-east.node2.0.0.system
+  +-Config.config.sdcio.dev/v1alpha1 interface.kubenet.region1.us-east.node2.0.0.system
 +-IPClaim.ipam.be.kuid.dev/v1alpha1 kubenet.region1.us-east.node2.ipv4
   +-IPEntry.ipam.be.kuid.dev/v1alpha1 default.kubenet.default.10.0.0.1-32
 +-IPClaim.ipam.be.kuid.dev/v1alpha1 kubenet.region1.us-east.node2.ipv6
