@@ -15,19 +15,10 @@ spec:
     - adaptor: sfp
       endpoint: 1
       node: node2
-      port: 2
-    - adaptor: sfp
-      endpoint: 1
-      node: node3
-      port: 2
-  - endpoints:
-    - adaptor: sfp
-      endpoint: 1
-      node: node3
       port: 1
     - adaptor: sfp
       endpoint: 1
-      node: node4
+      node: node1
       port: 1
   nodes:
   - name: node1
