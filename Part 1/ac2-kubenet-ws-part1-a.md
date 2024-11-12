@@ -26,57 +26,38 @@ Wait a few minutes for codespaces to load and go to the **Terminal** Section
 #### **What is Kind?**
 **Kind** is a opensource tool for running local Kubernetes clusters using Docker container "nodes." It’s great for learning, testing, or developing on Kubernetes.
 
-#### **Installation of Kind and kubectl**
+#### **Kind Installation**
 
-  **IMPORTANT:** You can skip this **Step** if you are using GitHub codespaces. the lab image is already coming with the required tools and applications.
+1. Import the locally cached kind node container image
+    ```shell
+    docker image load -i /var/cache/kindest-node.tar
+    ```
 
-1. **Install Kind**  
-   Run the following commands to download and set up Kind:
-   ```bash
-   curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-linux-amd64
-   chmod +x ./kind
-   sudo mv ./kind /usr/local/bin/kind
-   ```
-2. **Create a Kind-based Kubernetes cluster**
-   ```shell
-   # import the locally cached kind node container image
-   # workshop specific step, to prevent ratelimiting e.g. due to all participants pulling at same
-   docker image load -i /var/cache/kindest-node.tar
+2. Create docker network for kind and set iptable rule
+    ```shell
+    # pre-creating the kind docker bridge. This is to avoid an issue with kind running in codespaces. 
+    docker network create -d=bridge \
+      -o com.docker.network.bridge.enable_ip_masquerade=true \
+      -o com.docker.network.driver.mtu=1500 \
+      --subnet fc00:f853:ccd:e793::/64 kind
+    
+    # Allow the kind cluster to communicate with the later created containerlab topology
+    sudo iptables -I DOCKER-USER -o br-$(docker network inspect -f '{{ printf "%.12s" .ID }}' kind) -j ACCEPT
+    ```
 
-   # create kind cluster
-   kind create cluster
-   ```
-
-3. **Set Up Network Communication (iptables rule)**
-   ```bash
-   sudo iptables -I DOCKER-USER -o br-$(docker network inspect -f '{{ printf "%.12s" .ID }}' kind) -j ACCEPT
-   ```
-   - **Explanation**: This command allows the Kind cluster to communicate properly with other network elements.
-
-4. **Install `kubectl`**
-`kubectl` is the command-line tool for managing Kubernetes clusters.
-   ```bash
-   curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-   chmod +x ./kubectl
-   sudo mv ./kubectl /usr/local/bin/kubectl
-   ```
-5.  **Verify the Installation**
-Check the `kubectl` version
-   ```bash
-   kubectl version --client
-   ```
 ---
 
 ### **Step 1: Create your kubernetes cluster**
-1. **Create Kind Cluster and docker Network for GitHub CodeSpaces**
-   If you are using codespaces, you need to create a docker network before to create the cluster. Otherwise, **go to Step 2**.
-   Create docker network:
-   ```bash
-   docker network create -d=bridge -o com.docker.network.bridge.enable_ip_masquerade=true -o com.docker.network.driver.mtu=1500 --subnet fc00:f853:ccd:e793::/64 kind
-   ```
+1. **Create Kind Cluster for GitHub CodeSpaces**
    Create one-node kubernetes cluster
    ```bash
    kind create cluster
+   ```
+2. **preload images**
+   ```shell
+   # Load the local images into the kind cluster
+   kind load image-archive /var/cache/data-server.tar
+   kind load image-archive /var/cache/config-server.tar
    ```
 
 ---
