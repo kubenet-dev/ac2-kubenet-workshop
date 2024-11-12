@@ -14,7 +14,7 @@
           admin-state: enable
     {%- if spec.ipv4 %}
           ipv4:
-            admin-state: disable
+            admin-state: enable
         {%- if spec.ipv4.addresses|length > 0 %}
             address:
         {%- for address in spec.ipv4.addresses %}
