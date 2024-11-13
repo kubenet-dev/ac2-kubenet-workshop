@@ -10,7 +10,7 @@ Following are the steps to setup the environment.
 
 ```shell
 # change into Part 2 directory
-cd cd /workspaces/ac2-kubenet-workshop/Part\ 2/
+cd /workspaces/ac2-kubenet-workshop/Part\ 2/
 ```
 
 ### Load pre-cached container images
@@ -65,7 +65,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 kubectl wait -n cert-manager --for=condition=Available=True --timeout=300s deployments.apps cert-manager-webhook
 ```
 
-## SDCIO
+## SDC
 
 ### Installation
 
