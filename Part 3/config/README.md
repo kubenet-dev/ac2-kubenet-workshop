@@ -78,7 +78,7 @@ cat config/reconcilers/vendor/srlinux.nokia.com/config-subinterface/subinterface
 
 ####  builtin functions
 
-`isIPv4` | `IsIPv6`: return true or false based on the prefix parameter
+`is_ipv4` | `is_ipv6`: return true or false based on the prefix parameter
 
 parameters:
   - prefix
@@ -139,22 +139,19 @@ you should see the reconciler `topo.kubenet.dev.topologies.nodelink` being execu
 
 ```bash
 loading ...
-cloning repo https://github.com/sdcio/config-server.git ref aaf183a28ba8a3cff222321a767fc0022923af19 ....
-opened repo https://github.com/sdcio/config-server.git ref aaf183a28ba8a3cff222321a767fc0022923af19 ....
-cloning repo https://github.com/kuidio/kuid.git ref cb752b9df3fe1ca9285a40e10d44dc87cd021162 ....
 opened repo https://github.com/kuidio/kuid.git ref cb752b9df3fe1ca9285a40e10d44dc87cd021162 ....
-cloning repo https://github.com/kubenet-dev/apis.git ref 71e5d139d272026db682be8a815d33a9f10d7b1f ....
 opened repo https://github.com/kubenet-dev/apis.git ref 71e5d139d272026db682be8a815d33a9f10d7b1f ....
+opened repo https://github.com/sdcio/config-server.git ref aaf183a28ba8a3cff222321a767fc0022923af19 ....
 loading done
 running reconcilers ...
 running root reconciler config
 Run root summary
-execution success, time(msec) 18.164ms
+execution success, time(msec) 13.023ms
 Reconciler                                                 Start Stop Requeue Error
-device.network.kubenet.dev.interfaces.srlinux.nokia.com    6     6    0       0    
-device.network.kubenet.dev.subinterfaces.srlinux.nokia.com 3     3    0       0    
-nodes.infra.kuid.dev.id                                    4     4    0       0    
-nodes.infra.kuid.dev.itfce                                 3     3    0       0    
+interfaces.device.network.kubenet.dev.srlinux.nokia.com    4     4    0       0    
+nodes.infra.kuid.dev.id                                    2     2    0       0    
+nodes.infra.kuid.dev.itfce                                 2     2    0       0    
+subinterfaces.device.network.kubenet.dev.srlinux.nokia.com 2     2    0       0    
 running config validator ...
 completed
 ```
@@ -312,7 +309,7 @@ choreoctl run diff
 ~ config.sdcio.dev/v1alpha1, Kind=Config kubenet.region1.us-east.node1
 ~ config.sdcio.dev/v1alpha1, Kind=Config subinterface.kubenet.region1.us-east.node1.0.0.0.system
 = config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node1
-~ config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node1.tree
+= config.sdcio.dev/v1alpha1, Kind=RunningConfig kubenet.region1.us-east.node1.tree
 = device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node1.0.0.irb
 = device.network.kubenet.dev/v1alpha1, Kind=Interface kubenet.region1.us-east.node1.0.0.system
 ~ device.network.kubenet.dev/v1alpha1, Kind=SubInterface kubenet.region1.us-east.node1.0.0.0.system

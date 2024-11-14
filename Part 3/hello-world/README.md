@@ -85,7 +85,6 @@ parameters:
   - error: error message in case a failure occured
   - fatal: error message in case a failure occured and the business logic wants to interrupt (stop)
 
-
 ## choreo server
 
 open a terminal window and start the choreoserver 

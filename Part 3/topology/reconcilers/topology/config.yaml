@@ -1,8 +1,8 @@
 apiVersion: choreo.kform.dev/v1alpha1
 kind: Reconciler
 metadata:
-  #recommended format <group>.<resource>.<unique name within the namespace>
-  name: topo.kubenet.dev.topologies.nodelink 
+  #recommended format <resource>.<group>.<unique name within the resource>
+  name: topologies.topo.kubenet.dev.nodelink 
 spec: 
   # conditionType used by the reconciler
   conditionType: LinkNodeReady

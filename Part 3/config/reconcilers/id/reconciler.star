@@ -47,9 +47,9 @@ def get_enabled_afs(ipindex):
     "ipv6": False,
   }
   for prefix in ipindex.get("spec", {}).get("prefixes", []):
-    if isIPv4(prefix.get("prefix", "")):
+    if is_ipv4(prefix.get("prefix", "")):
       afs["ipv4"] = True
-    if isIPv6(prefix.get("prefix", "")):
+    if is_ipv6(prefix.get("prefix", "")):
       afs["ipv6"] = True
   return afs
 

@@ -1,7 +1,7 @@
 apiVersion: choreo.kform.dev/v1alpha1
 kind: Reconciler
 metadata:
-  name: device.network.kubenet.dev.interfaces.srlinux.nokia.com
+  name: interfaces.device.network.kubenet.dev.srlinux.nokia.com
 spec: 
   conditionType: Ready
   for: 

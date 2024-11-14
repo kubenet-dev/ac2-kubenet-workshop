@@ -121,15 +121,15 @@ you should see the reconciler `topo.kubenet.dev.topologies.nodelink` being execu
 
 ```bash
 loading ...
-opened repo https://github.com/kubenet-dev/apis.git ref 71e5d139d272026db682be8a815d33a9f10d7b1f ....
 opened repo https://github.com/kuidio/kuid.git ref cb752b9df3fe1ca9285a40e10d44dc87cd021162 ....
+opened repo https://github.com/kubenet-dev/apis.git ref 71e5d139d272026db682be8a815d33a9f10d7b1f ....
 loading done
 running reconcilers ...
 running root reconciler topology
 Run root summary
-execution success, time(msec) 10.391ms
+execution success, time(msec) 11.571ms
 Reconciler                           Start Stop Requeue Error
-topo.kubenet.dev.topologies.nodelink 3     3    0       0    
+topologies.topo.kubenet.dev.nodelink 3     3    0       0    
 completed
 ```
 
@@ -222,7 +222,7 @@ kind: NodeList
 you can do the same for links
 
 ```bash
-choreoctl get nodes.infra.kuid.dev -o yaml
+choreoctl get links.infra.kuid.dev -o yaml
 ```
 
 ```yaml
