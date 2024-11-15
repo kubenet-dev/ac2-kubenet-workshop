@@ -30,8 +30,27 @@ cd -
 ```
 
 ## SDC
+Lets install SDC.
 
 ### Installation
+The installation of SDC is rather simple. We just need to apply the following yaml file.
+
+It contains all the resources required for SDC to run in your kubernetes environment.
+
+- Deployment
+  A resource that manages the creation, scaling, and updating of a set of Pods with a defined containerized application, ensuring the desired state is maintained.
+- Services
+  An abstraction that defines a stable network endpoint to expose and route traffic to a set of Pods, enabling communication within or outside the cluster.
+- CustomResourceDefinitions
+  Extends the Kubernetes API, allowing users to define and manage custom resource types to meet specific application needs.
+- APIService
+  Registers an API endpoint with the Kubernetes API server, enabling custom or aggregated APIs to be served alongside core Kubernetes APIs.
+- PersistentVolumes
+  A storage resource provisioned in the cluster, abstracting underlying storage systems and providing persistent data storage for Pods independent of their lifecycle.
+- ServiceAccount
+  Provides an identity for processes running in a Pod, enabling them to authenticate to the Kubernetes API and access cluster resources securely.
+- RoleBindings
+  Grant specific permissions defined in a Role or ClusterRole to a user, group, or ServiceAccount within a namespace (or across the cluster for ClusterRoleBindings).
 
 ```shell
 # install sdcio
@@ -61,6 +80,8 @@ Next we will take a look at them and apply them afterwards.
 # inspect the different artifact files
 batcat artifacts/schema-nokia-srl-24.7.2.yaml artifacts/target-conn-profile-gnmi.yaml artifacts/target-sync-profile-gnmi.yaml artifacts/secret-srl.yaml artifacts/discovery_address.yaml
 ```
+
+Let's apply the schema resource.
 
 ```shell
 # Nokia SR Linux Yang Schema
@@ -109,6 +130,8 @@ SDC will sync the device configurations áccording to the sync profile and allow
 
 ```shell
 kubectl get runningconfigs.config.sdcio.dev dev1 -o yaml
+# or in json format
+kubectl get runningconfigs.config.sdcio.dev dev1 -o json
 ```
 
 The output is quite extensive so lets just take a look at the network-instance configuration.
@@ -118,7 +141,6 @@ kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.net
 ```
 
 #### Apply Configuration
-
 
 Verify interface config for interface `system0`.
 
@@ -236,11 +258,14 @@ Verify on the device, that the config is applied
 ```shell
 docker exec dev1 sr_cli "info interface system0"
 # or via kubernetes again
-kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.interface}" | | jq '.[] | select(.name | test("system0"))'
+kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.interface}" | jq '.[] | select(.name | test("system0"))'
 ```
 
-
 #### Apply ConfigSet
+
+The ConfigsSet resource is a config snippet that is not bound to a single target, as the config.config.sdcio.dev resource was.
+A selector labels are used to determine which targets should inherit the config in the ConfigSet.
+
 
 Verify interface config for ethernet-1/1 and ethernet-1/2.
 
@@ -260,18 +285,65 @@ batcat configs/vlans.yaml
 kubectl apply -f configs/vlans.yaml
 ```
 
+> Consult the DiscoveryRule again to see where / how the labels where applied to the targets.
+>
+> ```shell
+> > kubectl get discoveryrules.inv.sdcio.dev basic-usage -o yaml
+> apiVersion: v1
+> items:
+> - apiVersion: inv.sdcio.dev/v1alpha1
+>   kind: DiscoveryRule
+>  
+>   spec:
+>     ...
+>     targetTemplate:
+>       labels:
+>         sdcio.dev/region: us-east
+>     ...
+> ```
+>
+> And check how they are applied to the Target:
+>
+> ```shell
+> > kubectl get targets.inv.sdcio.dev dev1 -o yaml
+> apiVersion: inv.sdcio.dev/v1alpha1
+> kind: Target
+> metadata:
+>   annotations:
+>     inv.sdcio.dev/discovery-rule: basic-usage
+>   labels:
+>     inv.sdcio.dev/discovery-rule: basic-usage
+>     sdcio.dev/region: us-east
+>   name: dev1
+>   namespace: default
+> ...
+> ```
+
 Verify device config again with the afore mentioned command.
 
 Change the `configs/vlans.yaml` file. Change `ethernet-1/1` to `ethernet-1/2`.
 If you like add or remove vlans, descriptions, whatever and reapply the config.
 
 ```shell
+# change
+sed -i 's/ethernet-1\/1/ethernet-1\/2/g' configs/vlans.yaml
+# check
+batcat configs/vlans.yaml
+# apply 
 kubectl apply -f configs/vlans.yaml
 ```
 
-The device config should reflect the changes. It will have removed the initial config and applied your actual changes.
+The `ConfigSet` controller will have created `Config` resources based on the `ConfigSet` information for all the matching `Targets`.
 
-The ConfigSet reconciler takes the ConfigSet definition and creates configs for all the targets that match the targetSelector []. 
+```shell
+> kubectl get configs.config.sdcio.dev
+NAME                READY   REASON   TARGET         SCHEMA
+dev1-system0        True    Ready    default/dev1   srl.nokia.sdcio.dev/24.7.2
+vlan-configs-dev1   True    Ready    default/dev1   srl.nokia.sdcio.dev/24.7.2
+vlan-configs-dev2   True    Ready    default/dev2   srl.nokia.sdcio.dev/24.7.2
+```
+
+The device config should reflect the changes. It will have removed the initial config and applied your actual changes.
 
 The changes can be verified via above commands again, but also via kubernetes itself:
 
@@ -284,48 +356,59 @@ kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath='{.status.value.int
 
 ### How to generate yaml config snippets on SRLinux
 
-1. login to the container
-   
-   ```shell
-   # ssh
-   ssh dev1
-   # or via docker
-   docker exec -it dev1 sr_cli
-   ```
+1. Login to the container
+  
+```shell
+# ssh
+ssh dev1
+# or via docker
+docker exec -it dev1 sr_cli
+```
 
-2. build sample config on device
-   
-    ```shell
-    # enter configuration context
-    > enter candidate
-    
-    # change config
-    > set interface ethernet-1/3 description "MyDescription"
-    
-    # show diff in yaml format
-    > diff | as yaml
-    + interface:
-    +   - name: ethernet-1/3
-    +     description: MyDescription
+2. Build sample config on device
 
-    # NOTE: plus signes need ot be removed, but that is the actual yaml based config of the change.
+```shell
+# enter configuration context
+> enter candidate
 
-    # use discard now to discard changes, to make them apply via k8s
-    > discard now
-    ```
+# change config
+> set interface ethernet-1/3 description "MyDescription"
 
-3. build k8s resource 
+# show diff in yaml format
+> diff | as yaml
++ interface:
++   - name: ethernet-1/3
++     description: MyDescription
 
-    ```yaml
-    apiVersion: config.sdcio.dev/v1alpha1
-    kind: Config
-    metadata:
-      name: MyIntent                << Adjust Intenet Name 
-      namespace: default
-    spec:
-      priority: 10
-      config:
-      - path: /
-        value:
-          <INSERT CONFIG HERE>
-    ```
+# NOTE: plus signes need ot be removed, but that is the actual yaml based config of the change.
+
+# use discard now to discard changes, to make them apply via k8s
+> discard now
+```
+
+3. Build k8s resource
+
+```yaml
+apiVersion: config.sdcio.dev/v1alpha1
+kind: Config
+metadata:
+  name: MyIntent                << Adjust Intenet Name 
+  namespace: default
+spec:
+  priority: 10
+  config:
+  - path: /
+    value:
+      <INSERT CONFIG HERE>
+```
+
+
+
+
+https://gnmic.openconfig.net/cmd/generate/
+
+```shell
+git clone -b v24.7.2 https://github.com/sdcio/yang.git srl-yang
+
+gnmic generate --file srl-yang/srl_nokia/models/ --dir srl-yang/ --exclude .tools.  --path / > srl.yaml
+```

@@ -1,7 +1,7 @@
 apiVersion: config.sdcio.dev/v1alpha1
 kind: ConfigSet
 metadata:
-  name: intent1
+  name: vlan-configs
   namespace: default
 spec:
   target:
@@ -15,7 +15,7 @@ spec:
       interface:
       - name: ethernet-1/1
         admin-state: "enable"
-        description: "intent1"
+        description: "intent-vlan-configs"
         vlan-tagging: true
         subinterface:
         - index: 2
