@@ -92,7 +92,7 @@ v1alpha1.inv.sdcio.dev                 Local                          True      
 
 ```shell
 # inspect the different artifact files
-batcat artifacts/*
+batcat artifacts/schema-nokia-srl-24.7.2.yaml artifacts/target-conn-profile-gnmi.yaml artifacts/target-sync-profile-gnmi.yaml artifacts/secret-srl.yaml artifacts/discovery_address.yaml
 ```
 
 ```shell
@@ -134,7 +134,11 @@ dev2   True             srl.nokia.sdcio.dev   172.21.0.201   7220 IXR-D2L   Sim 
 
 ### Usage
 
+Let's interact with the network device through kubernetes.
+
 #### Retrieve Configuration
+
+SDC will sync the device configurations áccording to the sync profile and allow you to query the device config via kubectl.
 
 ```shell
 kubectl get runningconfigs.config.sdcio.dev dev1 -o yaml
@@ -167,13 +171,14 @@ batcat configs/system0.yaml
 kubectl apply -f configs/system0.yaml
 ```
 
-verify that the config is properly applied.
+Verify that the config is properly applied.
 
 ```shell
 > kubectl get configs.config.sdcio.dev
 NAME           READY   REASON   TARGET         SCHEMA
 dev1-system0   False   Failed   default/dev1   
 ```
+
 You will see the resource is not `READY`, it failed to apply.
 
 Let's investigate why that is.
@@ -206,6 +211,7 @@ kubectl apply -f configs/system0_disable.yaml
 ```
 
 Lets check the status again.
+
 ```shell
 # either reference by name
 kubectl get configs.config.sdcio.dev dev1-system0 -o yaml
@@ -238,7 +244,7 @@ status:
 
 Now we hit a must-statement, also a YANG construct, that allows to define fine grained rules on field in the configuration. The must statement is even provided as part of the output.
 
-```
+```text
 "((. = 'enable') and starts-with(../srl_nokia-if:name, 'system0')) or not(starts-with(../srl_nokia-if:name, 'system0'))"
 ```
 
@@ -262,6 +268,8 @@ Verify on the device, that the config is applied
 
 ```shell
 docker exec dev1 sr_cli "info interface system0"
+# or via kubernetes again
+kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.interface}" | | jq '.[] | select(.name | test("system0"))'
 ```
 
 
