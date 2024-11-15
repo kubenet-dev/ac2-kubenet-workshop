@@ -1,3 +1,6 @@
+# Following is the reference to the device specific YANG schema.
+# SDC will load the YANG schema from the given git repos and load them.
+
 apiVersion: inv.sdcio.dev/v1alpha1
 kind: Schema
 metadata:

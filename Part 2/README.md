@@ -18,31 +18,6 @@ cd /workspaces/ac2-kubenet-workshop/Part\ 2/
 ```shell
 # import the locally cached sr-linux container image
 docker image load -i /var/cache/srlinux.tar
-
-# import the locally cached kind node container image
-docker image load -i /var/cache/kindest-node.tar
-```
-
-### Local Kubernetes cluster based on Kind
-
-```shell
-# pre-creating the kind docker bridge. This is to avoid an issue with kind running in codespaces. 
-docker network create -d=bridge \
-  -o com.docker.network.bridge.enable_ip_masquerade=true \
-  -o com.docker.network.driver.mtu=1500 \
-  --subnet fc00:f853:ccd:e793::/64 kind
-
-# Allow the kind cluster to communicate with the later created containerlab topology
-sudo iptables -I DOCKER-USER -o br-$(docker network inspect -f '{{ printf "%.12s" .ID }}' kind) -j ACCEPT
-
-# creating the kind cluster
-kind create cluster
-```
-
-```shell
-# Load the local images into the kind cluster
-kind load image-archive /var/cache/data-server.tar
-kind load image-archive /var/cache/config-server.tar
 ```
 
 ### Nokia SRLinux based containerlab topology
@@ -52,17 +27,6 @@ kind load image-archive /var/cache/config-server.tar
 cd clab-topology
 sudo containerlab deploy
 cd -
-```
-
-### Install Cert-Manager
-
-The config-server (extension api-server) requires a certificate, which is created via cert-manager. The corresponding CA cert needs to be injected into the cabundle spec field of the `api-service` resource.
-
-```shell
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.yaml
-# If the SDCIO resources, see below are being applied to fast, the webhook of the cert-manager is not already there.
-# Hence we need to wait for the resource be become Available
-kubectl wait -n cert-manager --for=condition=Available=True --timeout=300s deployments.apps cert-manager-webhook
 ```
 
 ## SDC
@@ -90,6 +54,9 @@ v1alpha1.inv.sdcio.dev                 Local                          True      
 
 ### Setup
 
+SDC relies on different kinds of resource.
+Next we will take a look at them and apply them afterwards.
+
 ```shell
 # inspect the different artifact files
 batcat artifacts/schema-nokia-srl-24.7.2.yaml artifacts/target-conn-profile-gnmi.yaml artifacts/target-sync-profile-gnmi.yaml artifacts/secret-srl.yaml artifacts/discovery_address.yaml
@@ -102,7 +69,7 @@ kubectl apply -f artifacts/schema-nokia-srl-24.7.2.yaml
 
 Verify that the schema is downloaded and ready to be used.
 
-```shell 
+```shell
 > kubectl get schemas.inv.sdcio.dev srl.nokia.sdcio.dev-24.7.2
 NAME                         READY   PROVIDER              VERSION   URL                                            REF
 srl.nokia.sdcio.dev-24.7.2   True    srl.nokia.sdcio.dev   24.7.2    https://github.com/nokia/srlinux-yang-models   v24.7.2

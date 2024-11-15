@@ -1,3 +1,6 @@
+# This is the DiscoveryRule
+# It is used to find devices (in this case statically defiened addresses) and to tie the different profiles and credentials together.
+# The DIscovery controller will create target resources for the discovered devices.
 apiVersion: inv.sdcio.dev/v1alpha1
 kind: DiscoveryRule
 metadata:
