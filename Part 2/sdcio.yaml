@@ -1160,8 +1160,8 @@ spec:
         - --config=/config/data-server.yaml
         command:
         - /app/data-server
-        image: ghcr.io/sdcio/data-server:v0.0.48
-        imagePullPolicy: Always
+        image: ghcr.io/sdcio/data-server:v0.0.49
+        imagePullPolicy: Never
         name: data-server
         volumeMounts:
         - mountPath: /config
