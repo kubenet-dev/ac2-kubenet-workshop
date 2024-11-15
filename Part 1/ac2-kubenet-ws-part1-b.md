@@ -88,9 +88,9 @@ This lab will help students experience basic Kubernetes elements such as nodes, 
 
 ---
 ### **Step 6: Deploy additional applications: SDCIO**
-  To install SDCIO, copy the following snippet into a shell and execute it.
-  ```yaml
-  kubectl apply -f https://docs.sdcio.dev/artifacts/basic-usage/colocated.yaml
+   To install SDCIO, copy the following snippet into a shell and execute it.
+   ```shell
+   kubectl apply -f sdcio.yaml
    ```
 
    ** Verification **
