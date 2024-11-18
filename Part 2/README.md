@@ -31,7 +31,7 @@ cd -
 
 ## SDC
 
-Lets install SDC.
+Let's install SDC.
 
 ### Installation
 
@@ -145,7 +145,7 @@ kubectl get runningconfigs.config.sdcio.dev dev1 -o yaml
 kubectl get runningconfigs.config.sdcio.dev dev1 -o json
 ```
 
-The output is quite extensive so lets just take a look at the network-instance configuration and pretty-print it via `jq`.
+The output is quite extensive so Let's just take a look at the network-instance configuration and pretty-print it via `jq`.
 
 ```shell
 kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.network-instance}" | jq
@@ -163,7 +163,6 @@ docker exec dev1 sr_cli "info interface system0"
 ssh dev1 "info interface system0"
 
 # or via kubectl
-
 ```
 
 This will result in no output, since the interface `system0` is not yet configure.
@@ -207,13 +206,13 @@ status:
 
 The data-server indicated, that for the `admin-state` field, the allowed values are either `enable` or `disable`. These allowed field values it did take from the schema, that defined the allowed value space.
 
-Lets set the value to `disable`.
+Let's set the value to `disable`.
 
 ```shell
 kubectl apply -f configs/system0_disable.yaml
 ```
 
-Lets check the status again.
+Let's check the status again.
 
 ```shell
 # either reference by name
@@ -253,7 +252,7 @@ Now we hit a must-statement, also a YANG construct, that allows to define fine g
 
 Now that we now, system0 must always be up, we can set its admin-state to up and config will be applied.
 
-Lets set the value to `enable`.
+Let's set the value to `enable`.
 
 ```shell
 kubectl apply -f configs/system0_enable.yaml
