@@ -31,5 +31,6 @@ Install the following extensions:
 
 ## Using codespaces -- during/post event
 Use  [codespaces](https://codespaces.new/kubenet-dev/ac2-kubenet-workshop) to create your environment.
+
 Note: This will utilize your personal GitHub Codespaces credits.
 
