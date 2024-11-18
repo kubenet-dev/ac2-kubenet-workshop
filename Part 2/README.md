@@ -76,11 +76,18 @@ v1alpha1.inv.sdcio.dev                 Local                          True      
 ### Setup
 
 SDC relies on different kinds of resource.
+
+- **Yang Schema:** Defining the schema of the device configuration.
+- **Connection Profile:** Defining connection parameters like protocol, encoding, port etc. for configuration writes to the devices.
+- **Sync Profile**: Defining connection parameters like protocol, encoding, port etc. for configuration synchronisation / reads from the devices.
+- **Secret:** Authentication information against the devices.
+- **Discovery Rule:** Definition of devices (targets). Four options as of today (static, ip based, k8s pod, k8s service).
+
 Next we will take a look at them and apply them afterwards.
 
 ```shell
 # inspect the different artifact files
-batcat artifacts/schema-nokia-srl-24.7.2.yaml artifacts/target-conn-profile-gnmi.yaml artifacts/target-sync-profile-gnmi.yaml artifacts/secret-srl.yaml artifacts/discovery_address.yaml
+batcat artifacts/schema-nokia-srl-24.7.2.yaml artifacts/target-conn-profile-proto.yaml artifacts/target-sync-profile-gnmi.yaml artifacts/secret-srl.yaml artifacts/discovery_address.yaml
 ```
 
 Let's apply the schema resource.
@@ -98,9 +105,11 @@ NAME                         READY   PROVIDER              VERSION   URL        
 srl.nokia.sdcio.dev-24.7.2   True    srl.nokia.sdcio.dev   24.7.2    https://github.com/nokia/srlinux-yang-models   v24.7.2
 ```
 
+The other resources do not have any specific status. So we apply themin bulk.
+
 ```shell
 # Connection Profile
-kubectl apply -f artifacts/target-conn-profile-gnmi.yaml
+kubectl apply -f artifacts/target-conn-profile-proto.yaml
 
 # Sync Profile
 kubectl apply -f artifacts/target-sync-profile-gnmi.yaml
@@ -113,7 +122,7 @@ kubectl apply -f artifacts/discovery_address.yaml
 ```
 
 As a result of the discovery rule you shoud now see two targets created.
-The discovery will also determine additional information like the Platform, Serial number and chassis MAC address.
+The discovery will also determine additional information like the discovered `ADDRESS`, the `PROVIDER` in use, `PLATFORM`, `SERIALNUMBER` and chassis `MACADDRESS`.
 
 ```shell
 > kubectl get targets.inv.sdcio.dev 
@@ -124,11 +133,11 @@ dev2   True             srl.nokia.sdcio.dev   172.21.0.201   7220 IXR-D2L   Sim 
 
 ### Usage
 
-Let's interact with the network device through kubernetes.
+Let's interact with the network device through kubernetes now.
 
 #### Retrieve Configuration
 
-SDC will sync the device configurations áccording to the sync profile and allow you to query the device config via kubectl.
+SDC will sync the device configurations according to the sync profile and allow you to query the device config via kubectl.
 
 ```shell
 kubectl get runningconfigs.config.sdcio.dev dev1 -o yaml
@@ -136,7 +145,7 @@ kubectl get runningconfigs.config.sdcio.dev dev1 -o yaml
 kubectl get runningconfigs.config.sdcio.dev dev1 -o json
 ```
 
-The output is quite extensive so lets just take a look at the network-instance configuration.
+The output is quite extensive so lets just take a look at the network-instance configuration and pretty-print it via `jq`.
 
 ```shell
 kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.network-instance}" | jq
@@ -152,6 +161,9 @@ docker exec dev1 sr_cli "info interface system0"
 
 # or via ssh 
 ssh dev1 "info interface system0"
+
+# or via kubectl
+
 ```
 
 This will result in no output, since the interface `system0` is not yet configure.
@@ -267,7 +279,6 @@ kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.int
 
 What if the config we set via the the intent is being changed on the device.
 
-
 Let's change the description of interface `system0`.
 
 ```shell
@@ -281,8 +292,6 @@ Let's see whats happens to the interface description over time.
 # verify the change is committed on the device.
 watch ssh dev1 -- info interface system0
 ```
-
-
 
 #### Apply ConfigSet
 

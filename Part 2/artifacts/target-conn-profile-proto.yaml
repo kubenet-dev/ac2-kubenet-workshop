@@ -8,6 +8,6 @@ metadata:
 spec:
   port: 57400
   protocol: gnmi
-  encoding: JSON_IETF
+  encoding: PROTO
   skipVerify: true
   insecure: false
