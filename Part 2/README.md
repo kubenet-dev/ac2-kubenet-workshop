@@ -30,9 +30,11 @@ cd -
 ```
 
 ## SDC
+
 Lets install SDC.
 
 ### Installation
+
 The installation of SDC is rather simple. We just need to apply the following yaml file.
 
 It contains all the resources required for SDC to run in your kubernetes environment.
@@ -253,7 +255,7 @@ NAME           READY   REASON   TARGET         SCHEMA
 dev1-system0   True    Ready    default/dev1   srl.nokia.sdcio.dev/24.7.2
 ```
 
-Verify on the device, that the config is applied 
+Verify on the device, that the config is applied.
 
 ```shell
 docker exec dev1 sr_cli "info interface system0"
@@ -261,11 +263,31 @@ docker exec dev1 sr_cli "info interface system0"
 kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.interface}" | jq '.[] | select(.name | test("system0"))'
 ```
 
+#### Remediation
+
+What if the config we set via the the intent is being changed on the device.
+
+
+Let's change the description of interface `system0`.
+
+```shell
+# set interface system0 description to 
+docker exec -it dev1 sr_cli -ec -- set interface system0 description "foobar description"
+```
+
+Let's see whats happens to the interface description over time.
+
+```shell
+# verify the change is committed on the device.
+watch ssh dev1 -- info interface system0
+```
+
+
+
 #### Apply ConfigSet
 
 The ConfigsSet resource is a config snippet that is not bound to a single target, as the config.config.sdcio.dev resource was.
 A selector labels are used to determine which targets should inherit the config in the ConfigSet.
-
 
 Verify interface config for ethernet-1/1 and ethernet-1/2.
 
@@ -403,7 +425,7 @@ spec:
 ```
 
 
-
+## How to get the yaml config structure from yang
 
 https://gnmic.openconfig.net/cmd/generate/
 
