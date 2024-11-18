@@ -14,8 +14,11 @@ export ID=<number>
 ssh kubenet@$ID.ac2.kubenet.dev
 ```
 Once connected, use the following command to enter the devcontainer
+
 `devcontainer exec --workspace-folder /home/kubenet/ac2-kubenet-workshop zsh`
+
 or
+
 `devcontainer exec --workspace-folder /home/kubenet/ac2-kubenet-workshop bash`
 
 ### Using VS Code
