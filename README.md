@@ -15,11 +15,13 @@ ssh kubenet@$ID.ac2.kubenet.dev
 ```
 Once connected, use the following command to enter the devcontainer
 
-`devcontainer exec --workspace-folder /home/kubenet/ac2-kubenet-workshop zsh`
-
+```bash
+devcontainer exec --workspace-folder /home/kubenet/ac2-kubenet-workshop zsh
+```
 or
-
-`devcontainer exec --workspace-folder /home/kubenet/ac2-kubenet-workshop bash`
+```bash
+devcontainer exec --workspace-folder /home/kubenet/ac2-kubenet-workshop bash
+```
 
 ### Using VS Code
 Make sure to install [VS Code](https://code.visualstudio.com/download)
