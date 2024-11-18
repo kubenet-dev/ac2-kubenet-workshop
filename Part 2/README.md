@@ -105,7 +105,7 @@ NAME                         READY   PROVIDER              VERSION   URL        
 srl.nokia.sdcio.dev-24.7.2   True    srl.nokia.sdcio.dev   24.7.2    https://github.com/nokia/srlinux-yang-models   v24.7.2
 ```
 
-The other resources do not have any specific status. So we apply themin bulk.
+The other resources do not have any specific status. So we apply them in bulk.
 
 ```shell
 # Connection Profile

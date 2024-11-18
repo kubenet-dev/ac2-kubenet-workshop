@@ -16,10 +16,10 @@ spec:
   discoveryProfile:
     credentials: srl.nokia.sdcio.dev 
     connectionProfiles:
-    - gnmi-json-ietf-conn
+    - gnmi-proto-conn
   targetConnectionProfiles:
   - credentials: srl.nokia.sdcio.dev 
-    connectionProfile: gnmi-json-ietf-conn
+    connectionProfile: gnmi-proto-conn
     syncProfile: gnmi-get-json-ietf-sync
   targetTemplate:
     labels:

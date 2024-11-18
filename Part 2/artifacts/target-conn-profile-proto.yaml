@@ -3,7 +3,7 @@
 apiVersion: inv.sdcio.dev/v1alpha1
 kind: TargetConnectionProfile
 metadata:
-  name: gnmi-json-ietf-conn
+  name: gnmi-proto-conn
   namespace: default
 spec:
   port: 57400
