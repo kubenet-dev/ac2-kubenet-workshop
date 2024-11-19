@@ -14,7 +14,7 @@ new:
 
 ## Getting started
 
-move you PWD to the `ac2-kubenet-workshop/Part 3` subdirectory
+Move your working directory to the `ac2-kubenet-workshop/Part 3` subdirectory
 
 ## Explore the project
 
@@ -90,7 +90,7 @@ parameters:
 
 ## choreo server
 
-if you have a previous server running, stop the server with ^C. You can reuse the window.Otherwise open a terminal window and start the choreoserver 
+If you have a previous server running, stop the server with ^C. You can reuse the window.Otherwise open a terminal window and start the choreoserver 
 
 ```bash
 choreoctl server start topology
@@ -103,7 +103,7 @@ The choreoserver support a version controlled backend (git) but we don't explore
 branchstore update main oldstate <nil> -> newstate CheckedOut
 ```
 
-This create 2 directories in the choreo project
+This creates 2 directories in the choreo project
 
 - .choreo: used to download upstream references (not used in this example)
 - db: storage backend for choreo (git storage) -> location of the CR(s)
@@ -116,7 +116,7 @@ Now run the reconciler
 choreoctl run once
 ```
 
-first you should see the reference being loaded in the .choreo directory
+First you should see the reference being loaded in the .choreo directory
 you should see the reconciler `topo.kubenet.dev.topologies.nodelink` being executed.
 
 ```bash
@@ -148,7 +148,7 @@ b. The reconciler registered using its reconciler config
 c. The reconciler business logic got triggered by adding the input
 
 
-let's see if it performed its job, by looking at the details of the HelloWorld manifest
+Let's see if it performed its job.
 
 ```bash
 choreoctl run deps
@@ -165,7 +165,7 @@ Topology.topo.kubenet.dev/v1alpha1 kubenet
 
 🎉 You populated the inventory. 🤘
 
-look at the node details and look at the ownerreferences
+Look at the node details and look at the ownerreferences
 
 ```bash
 choreoctl get nodes.infra.kuid.dev -o yaml
@@ -219,7 +219,7 @@ items:
 kind: NodeList
 ```
 
-you can do the same for links
+You can do the same for links
 
 ```bash
 choreoctl get links.infra.kuid.dev -o yaml
@@ -261,7 +261,7 @@ items:
 kind: LinkList
 ```
 
-the run diff command allows you to see the resource that got added
+The diff command allows you to see the resource that got added
 
 ```bash
 choreoctl run diff
@@ -275,7 +275,7 @@ choreoctl run diff
 
 ## Update the topology - add links/nodes
 
-Lets add some nodes and links -> update the in file
+Let's add some nodes and links
 
 ```yaml
 choreoctl apply -f - <<EOF
@@ -336,7 +336,7 @@ choreoctl run diff
 ~ topo.kubenet.dev/v1alpha1, Kind=Topology kubenet
 ```
 
-The dependency commands show the parent child dependencies
+The dependency commands show the parent child relationships
 
 ```bash
 choreoctl run deps
@@ -356,7 +356,7 @@ Topology.topo.kubenet.dev/v1alpha1 kubenet
 
 ## Update the topology - delete links/nodes
 
-Lets delete node1 and its respective links and run the reconcilers again
+Let's delete node1 and its respective links and run the reconcilers again
 
 ```yaml
 choreoctl apply -f - <<EOF
@@ -397,7 +397,7 @@ When looking at the diff we see that the following links and node got deleted
 - `infra.kuid.dev/v1alpha1, Kind=Link kubenet.region1.us-east.node4.2.0.1.0.node1.2.0.1.0`
 - `infra.kuid.dev/v1alpha1, Kind=Node kubenet.region1.us-east.node1`
 
-and the  topology got updated
+and the topology got updated
 
 ```bash
 choreoctl run diff

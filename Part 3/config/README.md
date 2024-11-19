@@ -12,7 +12,7 @@ The goal of this exercise is to show you the basics of choreo (and kubernetes pr
 
 ## Getting started
 
-move you PWD to the `ac2-kubenet-workshop/Part 3` subdirectory
+Move your working directory to the `ac2-kubenet-workshop/Part 3` subdirectory
 
 ## Explore the project
 
@@ -98,9 +98,9 @@ parameters:
 
 ## choreo server
 
-if you have a previous server running, stop the server with ^C. You can reuse the window.Otherwise open a terminal window. 
+If you have a previous server running, stop the server with ^C. You can reuse the window. Otherwise open a terminal window. 
 
-start the choreoserver with the -r and -s flags
+Start the choreoserver with the -r and -s flags
 
 -r flag enables builtin api for resource management (IPAM, AS, VLAN, GENID, EXTCOMM)
 -s flag enables sdc schema validation and config generation
@@ -116,7 +116,7 @@ The choreoserver support a version controlled backend (git) but we don't explore
 branchstore update main oldstate <nil> -> newstate CheckedOut
 ```
 
-This create 2 directories in the choreo project
+This creates 2 directories in the choreo project
 
 - .choreo: used to download upstream references (not used in this example)
 - db: storage backend for choreo (git storage) -> location of the CR(s)
@@ -134,8 +134,8 @@ Now lets run choreo once
 choreoctl run once
 ```
 
-first you should see the reference being loaded in the .choreo directory
-you should see the reconciler `topo.kubenet.dev.topologies.nodelink` being executed.
+You should see the reference being loaded in the .choreo directory
+You should see the reconcilers being executed.
 
 ```bash
 loading ...
@@ -172,8 +172,7 @@ c. The reconciler business logic got triggered by adding the input
 
 d. the config validator ran
 
-
-let's see if it performed its job, by looking at the details of the HelloWorld manifest
+Let's see if it performed its job, by looking at the details
 
 ```bash
 choreoctl run deps
@@ -201,7 +200,7 @@ Node.infra.kuid.dev/v1alpha1 kubenet.region1.us-east.node1
 
 🎉 You created a config 🤘
 
-look at the config details and look at the ownerreferences and the fact that an ip address from the ipindex got referenced in the config.
+Look at the config details and look at the ownerreferences and the fact that an ip address from the ipindex got referenced in the config.
 
 ```bash
 choreoctl get configs.config.sdcio.dev subinterface.kubenet.region1.us-east.node1.0.0.0.system -o yaml
@@ -243,7 +242,7 @@ spec:
   priority: 10
 ```
 
-the diff indicates which resources got added
+Running the diff indicates which resources got added
 
 ```bash
 choreoctl run diff
@@ -297,7 +296,7 @@ After updating the resource run the reconcilers again
 choreoctl run once
 ```
 
-check the results. You can see you got
+Check the results.
 
 ```bash
 choreoctl run diff
@@ -325,7 +324,7 @@ choreoctl run diff
 ~ ipam.be.kuid.dev/v1alpha1, Kind=IPIndex kubenet.default
 ```
 
-The dependency commands show the parent child dependencies
+The dependency commands show the parent child relationships
 
 ```bash
 choreoctl run deps

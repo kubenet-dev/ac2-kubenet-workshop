@@ -13,7 +13,7 @@ The goal of this exercise is to show you the basics of choreo (and kubernetes pr
 
 ## Getting started
 
-move you PWD to the `ac2-kubenet-workshop/Part 3` subdirectory
+Move your working directory to the `ac2-kubenet-workshop/Part 3` subdirectory
 
 ## Explore the project
 
@@ -87,7 +87,7 @@ parameters:
 
 ## choreo server
 
-open a terminal window and start the choreoserver 
+Open a terminal window and start the choreoserver 
 
 ```shell
 choreoctl server start hello-world
@@ -100,7 +100,7 @@ The choreoserver support a version controlled backend (git) but we don't explore
 branchstore update main oldstate <nil> -> newstate CheckedOut
 ```
 
-This create 2 directories in the choreo project
+This creates 2 directories in the choreo project
 
 - .choreo: used to download upstream references (not used in this example)
 - db: storage backend for choreo (git storage) -> location of the CR(s)
@@ -113,7 +113,7 @@ Open a 2nd terminal where you interact with the server using choreoctl
 choreoctl run once
 ```
 
-you should see the reconciler `helloworlds.example.com.hello-world` being executed.
+You should see the reconciler `helloworlds.example.com.hello-world` being executed.
 
 ```shell
 loading ...
@@ -138,7 +138,7 @@ b. The reconciler registered using its reconciler config
 
 c. The reconciler business logic got triggered by adding the input
 
-let's see if it performed its job, by looking at the details of the HelloWorld manifest
+Let's see if it performed its job, by looking at the details of the HelloWorld manifest
 
 ```shell
 choreoctl get helloworlds.example.com test -o yaml
@@ -219,7 +219,7 @@ def reconcile(self):
   return reconcile_result(self, False, 0, "", False)
 ```
 
-when executing
+When executing
 
 ```shell
 choreoctl run once
