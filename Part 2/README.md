@@ -161,8 +161,6 @@ docker exec dev1 sr_cli "info interface system0"
 
 # or via ssh 
 ssh dev1 "info interface system0"
-
-# or via kubectl
 ```
 
 This will result in no output, since the interface `system0` is not yet configure.
@@ -274,7 +272,7 @@ docker exec dev1 sr_cli "info interface system0"
 kubectl get runningconfigs.config.sdcio.dev dev1 -o jsonpath="{.status.value.interface}" | jq '.[] | select(.name | test("system0"))'
 ```
 
-#### Remediation
+#### Config Drift and Remediation
 
 What if the config we set via the the intent is being changed on the device.
 
@@ -332,7 +330,7 @@ kubectl apply -f configs/vlans.yaml
 >     ...
 > ```
 >
-> And check how they are applied to the Target:
+> And check how they are applied to the `Target`:
 >
 > ```shell
 > > kubectl get targets.inv.sdcio.dev dev1 -o yaml
@@ -422,23 +420,29 @@ docker exec -it dev1 sr_cli
 apiVersion: config.sdcio.dev/v1alpha1
 kind: Config
 metadata:
-  name: MyIntent                << Adjust Intenet Name 
+  name: MyIntent                # << Adjust Intenet Name 
   namespace: default
 spec:
   priority: 10
   config:
-  - path: /
+  - path: /                     # if the intent covers just a subpath it should be defined here. e.g. /interface[name=ethernet-1/1] 
     value:
-      <INSERT CONFIG HERE>
+      <INSERT CONFIG HERE>      # << Add config here
 ```
 
 
 ## How to get the yaml config structure from yang
 
-https://gnmic.openconfig.net/cmd/generate/
+gnmic provides the ability to generate yaml file that contains all the config flags defined in a yang model under the given path.
 
 ```shell
 git clone -b v24.7.2 https://github.com/sdcio/yang.git srl-yang
 
-gnmic generate --file srl-yang/srl_nokia/models/ --dir srl-yang/ --exclude .tools.  --path / > srl.yaml
+gnmic generate --file srl-yang/srl_nokia/models/ --dir srl-yang/ --exclude .tools.  --path /interface/subinterface > srl.yaml
+
+batcat srl.yaml
 ```
+
+If you take that file, remove all the entries you do not need and adjust the values you're interested in, you have a working intent snippet at hand. (Path given to gnmic should match the path provided in the `config` resource)
+
+For details on the `gnmic generate` command see: https://gnmic.openconfig.net/cmd/generate/
