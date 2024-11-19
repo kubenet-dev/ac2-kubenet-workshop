@@ -2,7 +2,7 @@ load("topo.kubenet.dev.topologies.star", "build_node", "build_link")
 
 def reconcile(self):
   
-  # gathers all nodes in a dict for the links to perforn a convenient lookup
+  # gathers all nodes in a dict for the links to perform a convenient lookup
   nodes = {}
   for topo_node in self.get("spec", {}).get("nodes", []):
     node = build_node(self, topo_node)
