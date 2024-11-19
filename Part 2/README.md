@@ -313,7 +313,7 @@ docker exec dev1 sr_cli "info interface ethernet-1/{1,2}"
 ssh dev1 "info interface ethernet-1/{1,2}"
 ```
 
-Notice no Vlans are actually configure.
+Notice no Vlans are actually configured.
 Now take a look at `configs/vlans.yaml` and apply it.
 
 ```shell
