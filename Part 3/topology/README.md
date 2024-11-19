@@ -22,7 +22,7 @@ move you PWD to the `ac2-kubenet-workshop/Part 3` subdirectory
 
 No local crds are referenced, but we have  2 references that import crds. This allows for reusable code. There is 2 types of references in choreo:
 - crd based: only import crds -> we call this a crd child instance
-- all: import everything (right now we only support 2 hierarchies of all refs) - root -> single root child, but 
+- all: import everything (right now we only support 2 hierarchies for all refs) - root -> single root child 
 
 ### Input
 
