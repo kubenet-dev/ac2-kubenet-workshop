@@ -62,7 +62,11 @@ kubectl apply -f sdcio.yaml
 Check the pods are running
 
 ``` shell
-> kubectl get pods -n network-system 
+> kubectl get pods -n network-system
+```
+
+The output should look like:
+```shell
 NAME                             READY   STATUS    RESTARTS       AGE
 config-server-6964c6484b-8chv8   2/2     Running   2 (8m7s ago)   13h
 ```
