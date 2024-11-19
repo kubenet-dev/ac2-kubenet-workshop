@@ -7,7 +7,7 @@ metadata:
     config.sdcio.dev/targetName: dev1         # The target name to apply this config to
     config.sdcio.dev/targetNamespace: default
 spec:
-  priority: 10                                # priority to use as a 
+  priority: 10                                # priority to use
   config:
   - path: /                                   # path where config applies to, this case root level config
     value:                                    # the sub structure of value is the actual device config in yaml

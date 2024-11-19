@@ -39,24 +39,32 @@ The installation of SDC is rather simple. We just need to apply the following ya
 
 It contains all the resources required for SDC to run in your kubernetes environment.
 
-- Deployment
+- **Deployment:**
   A resource that manages the creation, scaling, and updating of a set of Pods with a defined containerized application, ensuring the desired state is maintained.
-- Services
+- **Services:**
   An abstraction that defines a stable network endpoint to expose and route traffic to a set of Pods, enabling communication within or outside the cluster.
-- CustomResourceDefinitions
+- **CustomResourceDefinitions:**
   Extends the Kubernetes API, allowing users to define and manage custom resource types to meet specific application needs.
-- APIService
+- **APIService:**
   Registers an API endpoint with the Kubernetes API server, enabling custom or aggregated APIs to be served alongside core Kubernetes APIs.
-- PersistentVolumes
+- **PersistentVolumes:**
   A storage resource provisioned in the cluster, abstracting underlying storage systems and providing persistent data storage for Pods independent of their lifecycle.
-- ServiceAccount
+- **ServiceAccount:**
   Provides an identity for processes running in a Pod, enabling them to authenticate to the Kubernetes API and access cluster resources securely.
-- RoleBindings
+- **RoleBindings:**
   Grant specific permissions defined in a Role or ClusterRole to a user, group, or ServiceAccount within a namespace (or across the cluster for ClusterRoleBindings).
 
 ```shell
 # install sdcio
 kubectl apply -f sdcio.yaml
+```
+
+Check the pods are running
+
+``` shell
+> kubectl get pods -n network-system 
+NAME                             READY   STATUS    RESTARTS       AGE
+config-server-6964c6484b-8chv8   2/2     Running   2 (8m7s ago)   13h
 ```
 
 Checking the api-registrations exist.
@@ -313,6 +321,28 @@ batcat configs/vlans.yaml
 kubectl apply -f configs/vlans.yaml
 ```
 
+Verify the device config.
+
+```shell
+# via docker
+docker exec dev1 sr_cli "info interface ethernet-1/{1,2}"
+
+# or via ssh 
+ssh dev1 "info interface ethernet-1/{1,2}"
+```
+
+The `ConfigSet` controller will have created `Config` resources based on the `ConfigSet` information for all the matching `Targets`.
+
+```shell
+> kubectl get configs.config.sdcio.dev
+NAME                READY   REASON   TARGET         SCHEMA
+dev1-system0        True    Ready    default/dev1   srl.nokia.sdcio.dev/24.7.2
+vlan-configs-dev1   True    Ready    default/dev1   srl.nokia.sdcio.dev/24.7.2
+vlan-configs-dev2   True    Ready    default/dev2   srl.nokia.sdcio.dev/24.7.2
+```
+
+Let's quickly trace back the label.
+
 > Consult the DiscoveryRule again to see where / how the labels where applied to the targets.
 >
 > ```shell
@@ -347,8 +377,6 @@ kubectl apply -f configs/vlans.yaml
 > ...
 > ```
 
-Verify device config again with the afore mentioned command.
-
 Change the `configs/vlans.yaml` file. Change `ethernet-1/1` to `ethernet-1/2`.
 If you like add or remove vlans, descriptions, whatever and reapply the config.
 
@@ -361,17 +389,7 @@ batcat configs/vlans.yaml
 kubectl apply -f configs/vlans.yaml
 ```
 
-The `ConfigSet` controller will have created `Config` resources based on the `ConfigSet` information for all the matching `Targets`.
-
-```shell
-> kubectl get configs.config.sdcio.dev
-NAME                READY   REASON   TARGET         SCHEMA
-dev1-system0        True    Ready    default/dev1   srl.nokia.sdcio.dev/24.7.2
-vlan-configs-dev1   True    Ready    default/dev1   srl.nokia.sdcio.dev/24.7.2
-vlan-configs-dev2   True    Ready    default/dev2   srl.nokia.sdcio.dev/24.7.2
-```
-
-The device config should reflect the changes. It will have removed the initial config and applied your actual changes.
+The device config should reflect the changes. It will have removed the initial config on `ethernet-1/1` and applied it to `ethernet-1/2` actual changes.
 
 The changes can be verified via above commands again, but also via kubernetes itself:
 
@@ -430,7 +448,6 @@ spec:
       <INSERT CONFIG HERE>      # << Add config here
 ```
 
-
 ## How to get the yaml config structure from yang
 
 gnmic provides the ability to generate yaml file that contains all the config flags defined in a yang model under the given path.
@@ -438,7 +455,7 @@ gnmic provides the ability to generate yaml file that contains all the config fl
 ```shell
 git clone -b v24.7.2 https://github.com/sdcio/yang.git srl-yang
 
-gnmic generate --file srl-yang/srl_nokia/models/ --dir srl-yang/ --exclude .tools.  --path /interface/subinterface > srl.yaml
+gnmic generate --file srl-yang/srl_nokia/models/ --dir srl-yang/ --exclude .tools. --path /interface/subinterface > srl.yaml
 
 batcat srl.yaml
 ```
