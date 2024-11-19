@@ -107,7 +107,7 @@ This create 2 directories in the choreo project
 
 ## choreo client
 
-Open a 2nd terminal where you intercat with the server using choreoctl
+Open a 2nd terminal where you interact with the server using choreoctl
 
 ```shell
 choreoctl run once
