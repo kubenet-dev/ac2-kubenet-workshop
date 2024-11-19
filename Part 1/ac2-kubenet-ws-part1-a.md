@@ -122,4 +122,4 @@ Each of these components works together to form the control plane, managing the 
 ---
 
 ### **Conclusion:**
-In this lab, you set up a Kubernetes cluster using Kind and explored core Kubernetes components with `kubectl`. You learned about the key elements like `kube-apiserver`, `etcd`, `kube-scheduler`, `kube-controller-manager`, `kube-proxy`, and CoreDNS, which form the backbone of any Kubernetes cluster. This hands-on experience will help you understand how Kubernetes manages workloads and communicates internally.
+In this lab, you set up a Kubernetes cluster using Kind and explored core Kubernetes components with `kubectl`. You learned about the key elements like `kube-apiserver`, `etcd`, `kube-scheduler`, `kube-controller-manager`, `kube-proxy`, and `CoreDNS`, which form the backbone of any Kubernetes cluster. This hands-on experience will help you understand how Kubernetes manages workloads and communicates internally.
