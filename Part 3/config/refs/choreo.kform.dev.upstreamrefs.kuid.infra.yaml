@@ -7,7 +7,7 @@ spec:
   url: https://github.com/kuidio/kuid.git
   ref:
     type: hash
-    name: cb752b9df3fe1ca9285a40e10d44dc87cd021162
+    name: 988ca3d927039fe7ced756ff0b6351ebc1b2b4fd
   includes:
   - infra.kuid.dev_adaptors
   - infra.kuid.dev_clusters

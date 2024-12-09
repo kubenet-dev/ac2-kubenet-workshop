@@ -266,6 +266,33 @@ choreoctl run diff
 + ipam.be.kuid.dev/v1alpha1, Kind=IPIndex kubenet.default
 ```
 
+Run the diff between running config and new config
+
+```shell
+chorecoctl run diff -c -a
+```
+
+```shell
+~ config.sdcio.dev/v1alpha1, Kind=Config kubenet.region1.us-east.node1
+  map[string]any{
++       "interface": []any{
++               map[string]any{
++                       "admin-state": string("enable"),
++                       "description": string("k8s-irb"),
++                       "name":        string("irb0"),
++               },
++               map[string]any{
++                       "admin-state":  string("enable"),
++                       "description":  string("k8s-system"),
++                       "name":         string("system0"),
++                       "subinterface": []any{map[string]any{...}},
++               },
++       },
+        "network-instance": []any{map[string]any{"admin-state": string("enable"), "description": string("Management network instance"), "name": string("mgmt"), "protocols": map[string]any{"linux": map[string]any{"export-neighbors": bool(true), "export-routes": bool(true), "import-routes": bool(true)}}, ...}},
+        "system":           map[string]any{"aaa": map[string]any{"authentication": map[string]any{"admin-user": map[string]any{"ssh-key": []any{string("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCPStMEn326bNzT2+RTGu8ywEhB"...), string("ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAgEAkulIK0tWXvHcg2kPG1h/4FD2+ia8"...), string("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8E90POUf2RgNbUf1467iuIg42U"...)}}, "authentication-method": []any{string("local")}, "idle-timeout": float64(7200), "linuxadmin-user": map[string]any{"password": string("$y$j9T$uEpbQNxVBoRlKQbmY3usE/$VvTJySvfZcRx8vDJg2LmOxAdBF5IREyia7"...), "ssh-key": []any{string("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCPStMEn326bNzT2+RTGu8ywEhB"...), string("ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAgEAkulIK0tWXvHcg2kPG1h/4FD2+ia8"...), string("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8E90POUf2RgNbUf1467iuIg42U"...)}}}, "server-group": []any{map[string]any{"name": string("local"), "type": string("local")}}}, "banner": map[string]any{"login-banner": string("................................................................"...)}, "dns": map[string]any{"network-instance": string("mgmt"), "server-list": []any{string("10.210.21.227"), string("10.210.21.228")}}, "grpc-server": []any{map[string]any{"admin-state": string("enable"), "name": string("insecure-mgmt"), "network-instance": string("mgmt"), "port": float64(57401), ...}, map[string]any{"admin-state": string("enable"), "name": string("mgmt"), "network-instance": string("mgmt"), "rate-limit": float64(65000), ...}}, ...},
+  }
+```
+
 ## Update ipindex with an ipv6 prefix
 
 Lets add some nodes and links -> update the in file

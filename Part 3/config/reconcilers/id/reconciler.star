@@ -63,7 +63,6 @@ def get_ipclaim(name, namespace, index, af):
     },
     "spec": {
       "index": index,
-      "prefixType": "pool",
       "selector": {
         "matchLabels": {
           "infra.kuid.dev/purpose": "loopback",
