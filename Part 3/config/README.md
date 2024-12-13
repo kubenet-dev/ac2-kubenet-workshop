@@ -307,11 +307,9 @@ metadata:
 spec:
   prefixes:
   - prefix: 10.0.0.0/24
-    prefixType: pool
     labels:
       infra.kuid.dev/purpose: loopback
   - prefix: 1000::/32
-    prefixType: pool
     labels:
       infra.kuid.dev/purpose: loopback
 EOF
